@@ -1,5 +1,7 @@
 # Digital-pathology
 Reference papers on digital pathology
+
+
 Automatic extraction of cell nuclei
 from H&E-stained histopathological
 images
