@@ -18,3 +18,6 @@ https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5233461/pdf/nihms-818917.pdf
 
 A resolution adaptive deep hierarchical (RADHicaL) learning scheme applied to nuclear segmentation of digital pathology images
 http://www.tandfonline.com/doi/abs/10.1080/21681163.2016.1141063?journalCode=tciv20
+
+Assessment of algorithms for mitosis detection in breast cancer histopathology images
+https://arxiv.org/ftp/arxiv/papers/1411/1411.5825.pdf
