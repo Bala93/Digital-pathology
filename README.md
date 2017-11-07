@@ -12,3 +12,9 @@ http://www2.warwick.ac.uk/fac/sci/dcs/research/tia/software/sntoolbox/
 
 Learning to count objects in images
 http://www.robots.ox.ac.uk/~vgg/research/counting/
+
+Robust Nucleus/Cell Detection and Segmentation in Digital Pathology and Microscopy Images: A Comprehensive Review
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5233461/pdf/nihms-818917.pdf
+
+A resolution adaptive deep hierarchical (RADHicaL) learning scheme applied to nuclear segmentation of digital pathology images
+http://www.tandfonline.com/doi/abs/10.1080/21681163.2016.1141063?journalCode=tciv20
