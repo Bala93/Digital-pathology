@@ -21,3 +21,9 @@ http://www.tandfonline.com/doi/abs/10.1080/21681163.2016.1141063?journalCode=tci
 
 Assessment of algorithms for mitosis detection in breast cancer histopathology images
 https://arxiv.org/ftp/arxiv/papers/1411/1411.5825.pdf
+
+A Nonlinear Mapping Approach to Stain  Normalization in Digital Histopathology Images Using Image-Specific Color Deconvolution
+http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=6727397
+
+Evaluation environment for digital and analog pathology: a platform for validation studies
+https://www.ncbi.nlm.nih.gov/pubmed/26158076
