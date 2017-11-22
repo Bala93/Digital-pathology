@@ -27,3 +27,5 @@ http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=6727397
 
 Evaluation environment for digital and analog pathology: a platform for validation studies
 https://www.ncbi.nlm.nih.gov/pubmed/26158076
+
+Datasets --> http://ludo17.free.fr/mitos_atypia_2014/icpr2014_MitosAtypia_DataDescription.pdf
