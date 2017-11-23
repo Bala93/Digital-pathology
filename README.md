@@ -29,3 +29,6 @@ Evaluation environment for digital and analog pathology: a platform for validati
 https://www.ncbi.nlm.nih.gov/pubmed/26158076
 
 Datasets --> http://ludo17.free.fr/mitos_atypia_2014/icpr2014_MitosAtypia_DataDescription.pdf
+
+Classification of mitotic figures with convolutional neural networks and seeded blob features
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3709419/
