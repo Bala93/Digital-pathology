@@ -18,7 +18,11 @@ Breast cancer is the most common cancer among womend and a major cause of death 
 
 ## Dataset
 
+1. ICPR 2012 - http://ludo17.free.fr/mitos_2012/download.html 
+2. MITOS-ATYPIA-14 - https://mitos-atypia-14.grand-challenge.org/
+3. Tumor Proliferation Assessment Challenge 2016 - http://tupac.tue-image.nl/
 
+<!-- 
 Reference papers on digital pathology
 
 
@@ -48,7 +52,9 @@ http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=6727397
 Evaluation environment for digital and analog pathology: a platform for validation studies
 https://www.ncbi.nlm.nih.gov/pubmed/26158076
 
-Datasets --> http://ludo17.free.fr/mitos_atypia_2014/icpr2014_MitosAtypia_DataDescription.pdf
+Datasets:
+
+http://ludo17.free.fr/mitos_atypia_2014/icpr2014_MitosAtypia_DataDescription.pdf
 
 Classification of mitotic figures with convolutional neural networks and seeded blob features
-https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3709419/
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3709419/ -->
