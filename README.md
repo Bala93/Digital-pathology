@@ -22,6 +22,14 @@ Breast cancer is the most common cancer among womend and a major cause of death 
 2. MITOS-ATYPIA-14 - https://mitos-atypia-14.grand-challenge.org/
 3. Tumor Proliferation Assessment Challenge 2016 - http://tupac.tue-image.nl/
 
+## Whole slide image process:
+## Research papers
+1. Automatic Grading of Breast Cancer Whole-Slide Histopathology Images( Thomas Wollmann )
+
+
+## Dataset
+
+
 <!-- 
 Reference papers on digital pathology
 

@@ -19,6 +19,49 @@ def write_img(img,img_path):
     cv2.imwrite(img_path,img)
     return
 
+def write_xml(root,xmin,ymin,xmax,ymax):
+    
+    xmin = et.Element('xmin')
+    ymin = et.Element('ymin')
+    xmax = et.Element('xmax')
+    ymax = et.Element('ymax')
+    bndbox = root.find('object').find('bndbox')
+    bndbox.insert(1,xmin)
+    bndbox.insert(1,ymin)
+    bndbox.insert(1,xmax)
+    bndbox.insert(1,ymax)
+    
+    xmin = x-w/2
+    ymin = x-h/2
+    xmax = w/2+x
+    ymax = h/2+x
+    
+    if(xmin>540):
+        xmin = 540
+    if(ymin>540):
+        ymin = 540
+    if(xmax>540):
+        xmax = 540
+    if(ymax>540):
+        ymax = 540
+    
+    if(xmin<0):
+        xmin = 0
+    if(ymin<0):
+        ymin = 0
+    if(xmax<0):
+        xmax = 0
+    if(ymax<0):
+        ymax = 0
+    
+    bndbox.find('xmin').text = str(xmin)
+    bndbox.find('ymin').text = str(ymin)
+    bndbox.find('xmax').text = str(xmax)
+    bndbox.find('ymax').text = str(ymax)        
+
+    return 
+
+
 if __name__ == "__main__":
     
     '''
@@ -65,6 +108,8 @@ if __name__ == "__main__":
     mask_path_ext = os.path.join(mask_path , '*.' + mask_ext)
     mask_images_path = glob.glob(mask_path_ext)
 
+    no_of_bounding_boxes = 0
+
     for each_mask_path in tqdm(mask_images_path):
 
         # print each_mask_path
@@ -75,96 +120,39 @@ if __name__ == "__main__":
         img_mask_gray = cv2.cvtColor(img_mask,cv2.COLOR_BGR2GRAY)
         _,im_bw = cv2.threshold(img_mask_gray, 200, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
         kernel = np.ones([5,5],np.uint8)
-        opening = cv2.morphologyEx(im_bw,cv2.MORPH_OPEN,kernel)
-        dilation = cv2.dilate(opening,kernel,iterations=1)
+        # opening = cv2.morphologyEx(im_bw,cv2.MORPH_OPEN,kernel)
+        dilation = cv2.dilate(im_bw,kernel,iterations=3)
         cnts = cv2.findContours(dilation, cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
         cnts = cnts[0] if imutils.is_cv2() else cnts[1]
-        for c in cnts:
-            (x, y, w, h) = cv2.boundingRect(c)
-            area_ = cv2.contourArea(c)
-            if area_ > 100:
-                cv2.rectangle(img_mask, (x, y), (x + w, y + h), (0, 0, 255), 2)
-        
-        write_img(img_mask,os.path.join(mask_bounding_path,mask_name_with_ext))
-        # break
-    # display_img(img_mask)
+        eps = 5
 
-    '''
-        # Xml file
-        cnts = cv2.findContours(opening, cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
-        cnts = cnts[0] if imutils.is_cv2() else cnts[1]
-        
-        # Open original file
+
         tree = et.parse('mask.xml')
         root = tree.getroot()
-
         filename = root.find('filename')
-        filename.text = img_name
-        
-        # loop over the contours
+        filename.text = mask_name_with_ext
+
         for c in cnts:
-        # compute the bounding box of the contour and then draw the
-        # bounding box on both input images to represent where the two
-        # images differ
             (x, y, w, h) = cv2.boundingRect(c)
-            #text = str(w*h)
-            #print text
-            cv2.rectangle(img, (x, y), (x + w, y + h), (0, 0, 255), 2)
-            cv2.rectangle(img_mask, (x, y), (x + w, y + h), (0, 0, 255), 2)
-            #cv2.putText(img, text, (x, h), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 255, 255), lineType=cv2.LINE_AA)
-            #cv2.putText(img_mask, text,(x,h) , cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 255, 255), lineType=cv2.LINE_AA) 
-            obj = tree.find('object')
-            node = et.Element('bndbox')
-            obj.insert(1,node)
-            xmin = et.Element('xmin')
-            ymin = et.Element('ymin')
-            xmax = et.Element('xmax')
-            ymax = et.Element('ymax')
-            bndbox = root.find('object').find('bndbox')
-            bndbox.insert(1,xmin)
-            bndbox.insert(1,ymin)
-            bndbox.insert(1,xmax)
-            bndbox.insert(1,ymax)
-            
-            xmin = x-w/2
-            ymin = x-h/2
-            xmax = w/2+x
-            ymax = h/2+x
-            
-            if(xmin>540):
-                xmin = 540
-            if(ymin>540):
-                ymin = 540
-            if(xmax>540):
-                xmax = 540
-            if(ymax>540):
-                ymax = 540
-            
-            if(xmin<0):
-                xmin = 0
-            if(ymin<0):
-                ymin = 0
-            if(xmax<0):
-                xmax = 0
-            if(ymax<0):
-                ymax = 0
-            
-            bndbox.find('xmin').text = str(xmin)
-            bndbox.find('ymin').text = str(ymin)
-            bndbox.find('xmax').text = str(xmax)
-            bndbox.find('ymax').text = str(ymax)
+            xmin = x - eps
+            ymin = y - eps
+            xmax   = x + w + eps
+            ymax   = y + h + eps 
+            color   = (0,0,255)
+            line_thickness = 2
 
-        
-        #cv2.imwrite('0_0210_bb.png',img)
-        # plt.imshow(img)
-        # plt.show()
-        # plt.imshow(img_mask)
-        # plt.show()
-        #smask_path = file.replace('.png','')+'_smask.png'
-        #cv2.imwrite(smask_path,img_mask)
+            area_ = cv2.contourArea(c)
+            if area_ > 100:
+                cv2.rectangle(img_mask, (xmin,ymin), (xmax ,ymax),color, line_thickness)
+                obj = tree.find('object')
+                node = et.Element('bndbox')
+                obj.insert(1,node)
+                write_xml(root,xmin,ymin,xmax,ymax)
+                no_of_bounding_boxes += 1
+        tree.write('1.xml')
 
-        # Write back to file
-        #et.write('file.xml')
-        print xml_path
-        tree.write(xml_path)
-    '''
+        write_img(img_mask,os.path.join(mask_bounding_path,mask_name_with_ext))
+        # break
+        # break
+    # display_img(img_mask)
+    print ("No of bounding boxes:",no_of_bounding_boxes)

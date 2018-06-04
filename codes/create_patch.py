@@ -12,7 +12,8 @@ if __name__ == "__main__":
     # This is for obtaining square images
     # TODO: For non-square images implement, rewrite print statement in run 
     #python create_patch.py --input_path='/media/balamurali/Seagate Backup Plus Drive/Mitosis_detection/2012_aperio_scan_image/whole_images' --output_path='/media/balamurali/Seagate Backup Plus Drive/Mitosis_detection/2012_aperio_scan_image/sampled_images' --img_ext='bmp' --stride=32 --img_size=256 --img_size=512
-    #python create_patch.py --input_path='../dataset/scale_16/img' --output_path='../dataset/scale_16/img/samples' --img_ext='png' --stride=256 --img_size=512
+    #python create_patch.py --input_path='/media/htic/Seagate Backup Plus Drive/Mitosis_detection/2012_aperio_scan_image/mitosis_evaluation_mask' --output_path='/media/htic/Seagate Backup Plus Drive/Mitosis_detection/2012_aperio_scan_image/dataset/test_data/' --img_ext='bmp' --stride=512 --img_size=512
+
 
     parser = argparse.ArgumentParser('Sample images giving image size and stride -- Please give absolute path')
     parser.add_argument(

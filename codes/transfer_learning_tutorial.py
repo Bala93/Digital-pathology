@@ -277,6 +277,9 @@ exp_lr_scheduler = lr_scheduler.StepLR(optimizer_ft, step_size=7, gamma=0.1)
 
 model_ft = train_model(model_ft, criterion, optimizer_ft, exp_lr_scheduler,
                        num_epochs=25)
+    
+# model_ft.save_state_dict('/media/htic/NewVolume1/murali/mitosis/weight/whole_slide.pt')
+torch.save(model_ft.state_dict(),'/media/htic/NewVolume1/murali/mitosis/weight/whole_slide.pt')
 
 ######################################################################
 #
@@ -334,5 +337,5 @@ model_conv = train_model(model_conv, criterion, optimizer_conv,
 
 visualize_model(model_conv)
 '''
-plt.ioff()
-plt.show()
+# plt.ioff()
+# plt.show()

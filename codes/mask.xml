@@ -1,0 +1,24 @@
+<annotation>
+    <folder>HTIC-Mitosis</folder>
+    <filename>{}</filename>
+    <source>
+        <database>Mitosis</database>
+        <annotation>HTIC-Annotated</annotation>
+        <image>HTIC-Images</image>
+    </source>
+    <size>
+        <width>{540}</width>
+        <height>{540}</height>
+        <depth>{3}</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>{Mitotic}</name>
+        <pose>Frontal</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+    </object>
+</annotation>
+
+
