@@ -149,7 +149,7 @@ if __name__ == "__main__":
                 obj.insert(1,node)
                 write_xml(root,xmin,ymin,xmax,ymax)
                 no_of_bounding_boxes += 1
-        tree.write('1.xml')
+        # tree.write('1.xml')
 
         write_img(img_mask,os.path.join(mask_bounding_path,mask_name_with_ext))
         # break
