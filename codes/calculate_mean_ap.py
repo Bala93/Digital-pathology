@@ -295,10 +295,13 @@ def plot_pr_curve(
 
 if __name__ == "__main__":
 
-    with open('ground_truth_boxes.json') as infile:
+    gt_box = '/media/htic/NewVolume1/murali/mitosis/dataset/mitotic_count/results/' + 'ground_truth_boxes.json'
+    pred_box = '/media/htic/NewVolume1/murali/mitosis/dataset/mitotic_count/results/' + 'predicted_boxes.json'
+  
+    with open(gt_box) as infile:
         gt_boxes = json.load(infile)
 
-    with open('predicted_boxes.json') as infile:
+    with open(pred_box) as infile:
         pred_boxes = json.load(infile)
 
     # Runs it for one IoU threshold
