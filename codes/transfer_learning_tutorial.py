@@ -87,7 +87,7 @@ data_transforms = {
     ]),
 }
 
-data_dir = '/media/htic/NewVolume1/murali/mitosis/dataset/scale_16_train_val'
+data_dir = '/media/htic/NewVolume1/murali/GE_project/status/dataset/'
 
 image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x),
                                           data_transforms[x])

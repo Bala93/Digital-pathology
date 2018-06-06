@@ -296,7 +296,7 @@ def plot_pr_curve(
 if __name__ == "__main__":
 
     gt_box = '/media/htic/NewVolume1/murali/mitosis/dataset/mitotic_count/results/' + 'ground_truth_boxes.json'
-    pred_box = '/media/htic/NewVolume1/murali/mitosis/dataset/mitotic_count/results/' + 'predicted_boxes.json'
+    pred_box = '/media/htic/NewVolume1/murali/mitosis/dataset/mitotic_count/results/' + 'predicted_out.json'
   
     with open(gt_box) as infile:
         gt_boxes = json.load(infile)
