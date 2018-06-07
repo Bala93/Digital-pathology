@@ -16,7 +16,7 @@ train_val_path = os.path.join(dataset_create_path,'train-val')
 if not os.path.exists(train_val_path):
     os.mkdir(train_val_path)
 
-# train_val_path = os.path.join(dataset_create_path,'train-val')
+# train_val_path = os.path.join(dataset_create_path,'train-val')    
 
 class_names = ['Normal','Tumor']
 
