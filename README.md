@@ -24,8 +24,9 @@ Breast cancer is the most common cancer among womend and a major cause of death 
 
 ## Whole slide image process:
 ## Research papers
-1. Automatic Grading of Breast Cancer Whole-Slide Histopathology Images( Thomas Wollmann )
-
+1. Automatic Grading of Breast Cancer Whole-Slide Histopathology Images(Thomas Wollmann).
+2. Tumor Proliferation Assessment of Whole Slide Images (Martin Rousson).
+3. Multi-class single-lable classification of histopathological whole-slide images(Daniel Bug).
 
 ## Dataset
 
