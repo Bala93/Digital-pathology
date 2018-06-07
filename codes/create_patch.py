@@ -50,6 +50,13 @@ if __name__ == "__main__":
         type = int
     )
 
+    parser.add_argument(
+        '--input_type',
+        required = True,
+        help = 'Give mask or image',
+        type = str
+    )
+
     opt = parser.parse_args()    
     img_folder = opt.input_path
     # img_folder = '/media/balamurali/NewVolume2/Deep_network/mitosis'
@@ -58,6 +65,7 @@ if __name__ == "__main__":
     img_ext    = opt.img_ext
     img_size   = opt.img_size
     img_stride = opt.stride
+    input_type = opt.input_type
     
     stride_list = []
     window_shape_list = []
@@ -79,7 +87,7 @@ if __name__ == "__main__":
         for stride in tqdm(stride_list):
             print ("Stride size : {}\n".format(stride))
                 
-            out_folder_temp = os.path.join(out_folder,'size_' + str(window_shape[0]) + '_' + 'stride_' +str(stride))    
+            out_folder_temp = os.path.join(out_folder,input_type + '_size_' + str(window_shape[0]) + '_' + 'stride_' +str(stride))    
         
             if not os.path.exists(out_folder_temp):
                 print ("Directory {} not found,creating one".format(out_folder_temp))

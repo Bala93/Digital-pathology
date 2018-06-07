@@ -6,8 +6,8 @@ from tqdm import tqdm
 
 if __name__ == "__main__":
 
-    xml_path = '/media/htic/Seagate Backup Plus Drive/mitotis/FasterRCNN_evaluation/xml_mitosis/' 
-    json_path = '/media/htic/NewVolume1/murali/mitosis/dataset/mitotic_count/results/original.json'
+    xml_path = '/media/htic/Balamurali/Histopath/Trials/FasterRCNN_evaluation/xml_mitosis/' 
+    json_path = '/media/htic/NewVolume1/murali/mitosis/mitotic_count/ground_truth_boxes.json'
     xml_files = glob.glob(xml_path + '*.xml')
     
     metrics_gt = {}

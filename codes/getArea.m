@@ -1,7 +1,7 @@
 function [Area,bw,binar] = getArea(imgpath)
 image1=imread(imgpath);
 size(image1);
-image_find_datatype=islogical(image1)
+image_find_datatype=islogical(image1);
 if image_find_datatype==1
     image1=uint8(image1);
 end

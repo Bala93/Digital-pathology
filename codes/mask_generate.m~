@@ -34,7 +34,6 @@ for whole_mask_count = 1: mask_whole_files_total
        mask_path        = fullfile(mask_folder,mask_name); 
        mask_img = imread(mask_path);
        mask_img_sum = sum(mask_img(:));
-       % This condition is to check whether the mask has any white blobs.
        if mask_img_sum > 0
            [sample_mask_area,sample_mask_bw,mask_img]=getArea(mask_path);
            mask_updated = removebrokencell(sample_mask_bw,whole_mask_area,mask_img);
@@ -43,14 +42,13 @@ for whole_mask_count = 1: mask_whole_files_total
            dest_img_path = fullfile(updated_img_sample_path,mask_name);
            dest_mask_path = fullfile(updated_mask_sample_path,mask_name);
            mask_updated_sum=sum(mask_updated(:));
-           if mask_updated_sum>0
-            % mask with white region are alone copied
-            % image is copied while mask region is written as the mask is
-            % updated i.e small cells are deleted.
-            copyfile(src_img_path,dest_img_path);
-            imwrite(mask_updated,dest_mask_path);
-           end
        end
+       
+       if mask_updated_sum>0
+        copyfile(src_img_path,dest_img_path);
+        imwrite(mask_updated,dest_mask_path);
+       end
+   
    end
    end
 end
