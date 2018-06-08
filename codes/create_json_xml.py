@@ -29,7 +29,7 @@ if __name__ == "__main__":
         metrics_gt[filename] = bndbox_list
         # print metrics_gt
         # break
-    print metrics_gt.keys()
+    #print metrics_gt.keys()
     with open(json_path,'w') as f:
         json.dump(metrics_gt,f)
      

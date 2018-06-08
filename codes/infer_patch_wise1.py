@@ -51,28 +51,19 @@ def get_sub_image(r_sample,g_sample,b_sample,row,col):
 if __name__ == "__main__":
 
     # Settings 
-    model_path = '/media/htic/NewVolume1/murali/Object_detection/models/research/models/model_mitosis/graph/frozen_inference_graph.pb'
-    #imgs_path = '/input/*.png'
-    #val_imgs_list   = '/media/htic/NewVolume1/murali/yolo/darknet/sakthi_nuclei/nuclei/whole_data/output/val.txt'
-    #val_img_path    = '/media/htic/NewVolume1/murali/yolo/darknet/sakthi_nuclei/nuclei/whole_data/images/*.jpg'
-    val_img_path    = '/media/htic/NewVolume1/murali/mitosis/dataset/mitotic_count/*.bmp'
-    #img_paths       = []
-    #with open(val_imgs_list,'r') as f:
-    #    img_names = f.readlines()
-    #    for img in img_names:
-    #        img_paths.append(os.path.join(val_img_path,img.strip() + '.jpg'))
-  
-    # imgs_path = '
+    model_path = '/media/htic/NewVolume1/murali/Object_detection/models/research/models/model_mitosis/graph/mitosis/512_128/frozen_inference_graph.pb'
+    image_yellow_path = '/media/htic/NewVolume1/murali/mitosis/mitotic_count/test_image_yellow'
+    val_img_path    = '/media/htic/NewVolume1/murali/mitosis/mitotic_count/test_images/*.bmp'
     img_paths = glob.glob(val_img_path)
-    # img_paths   = ['/media/htic/NewVolume1/murali/Object_detection/models/research/datasets/clamp/input/1_2135.jpg']
     label_path = '/media/htic/NewVolume1/murali/Object_detection/models/research/data/mitosis_label_map.pbtxt'
-    detection_out_path = '/media/htic/NewVolume1/murali/mitosis/dataset/mitotic_count/results/'
+    detection_out_path = '/media/htic/NewVolume1/murali/mitosis/mitotic_count/test_images/results/'
     predicted_json_path = os.path.join(detection_out_path,'predicted_out.json')
-    
     NUM_CLASSES = 1
     label_map = label_map_util.load_labelmap(label_path)
     categories = label_map_util.convert_label_map_to_categories(label_map,max_num_classes=NUM_CLASSES,use_display_name=True)
     category_index = label_map_util.create_category_index(categories)
+    min_score_thresh = 0.85
+
 
     # Initializing the graph
     detection_graph = tf.Graph()
@@ -146,7 +137,7 @@ if __name__ == "__main__":
                             category_index,
                             line_thickness=5,
                             use_normalized_coordinates=True,
-                            min_score_thresh = 0.50
+                            min_score_thresh = min_score_thresh
                         )
 
                         updated_metric_box = []
@@ -160,9 +151,11 @@ if __name__ == "__main__":
                             ymax = ymax + row * stride
 
                             area = (xmax - xmin) * (ymax - ymin)
+
+
                             updated_metric_box.append([xmin,ymin,xmax,ymax])
                             # if area > 100:
-                            cv2.rectangle(whole_img,(xmin,ymin),(xmax,ymax),(0,255,0),3)
+                            #cv2.rectangle(whole_img,(xmin,ymin),(xmax,ymax),(0,255,0),3)
 
                         boxes +=  updated_metric_box
                         scores += metric_scores
@@ -182,16 +175,24 @@ if __name__ == "__main__":
                         # cv2.imshow('win',img_cv2_bgr)
                         # cv2.waitKey(0)
                         # cv2.destroyAllWindows()
-                print (boxes)
-                boxes,scores = non_max_suppression_fast(np.array(boxes),0.6,np.array(scores))                        
-                print (boxes)
+                
+
+                boxes,scores = non_max_suppression_fast(np.array(boxes),0.5,np.array(scores))   
+                
+                [cv2.rectangle(whole_img,(xmin,ymin),(xmax,ymax),(0,255,0),3)for xmin,ymin,xmax,ymax in boxes]
+                
+                print ("File_name:{},No.of boxes:{}".format(file_name,len(boxes)))
+
                 metric_json[file_name]['boxes'] = boxes
                 metric_json[file_name]['scores'] = scores
+                yellow_cell_img_path = os.path.join(image_yellow_path,file_name).replace('.bmp','.jpg')
+                
+                yellow_img = cv2.imread(yellow_cell_img_path)
+                res_img = cv2.add(yellow_img,whole_img)
+                cv2.imwrite(detection_out_path + file_name ,res_img)
+                
 
-                cv2.imwrite(detection_out_path + file_name ,whole_img)
-                #break
             with open(predicted_json_path,'w') as f:
                  json.dump(metric_json,f)
 
-            #####################
-            ####################
+   
