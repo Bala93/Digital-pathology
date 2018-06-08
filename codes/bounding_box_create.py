@@ -19,31 +19,26 @@ def write_img(img,img_path):
     cv2.imwrite(img_path,img)
     return
 
-def write_xml(root,xmin,ymin,xmax,ymax):
+def write_xml(root,xmin,ymin,xmax,ymax,width,height):
     
-    xmin = et.Element('xmin')
-    ymin = et.Element('ymin')
-    xmax = et.Element('xmax')
-    ymax = et.Element('ymax')
+    xmin_tag = et.Element('xmin')
+    ymin_tag = et.Element('ymin')
+    xmax_tag = et.Element('xmax')
+    ymax_tag = et.Element('ymax')
     bndbox = root.find('object').find('bndbox')
-    bndbox.insert(1,xmin)
-    bndbox.insert(1,ymin)
-    bndbox.insert(1,xmax)
-    bndbox.insert(1,ymax)
+    bndbox.insert(1,xmin_tag)
+    bndbox.insert(1,ymin_tag)
+    bndbox.insert(1,xmax_tag)
+    bndbox.insert(1,ymax_tag)
     
-    xmin = x-w/2
-    ymin = x-h/2
-    xmax = w/2+x
-    ymax = h/2+x
-    
-    if(xmin>540):
-        xmin = 540
-    if(ymin>540):
-        ymin = 540
-    if(xmax>540):
-        xmax = 540
-    if(ymax>540):
-        ymax = 540
+    if(xmin>width):
+        xmin = width 
+    if(ymin>height):
+        ymin = height 
+    if(xmax>width):
+        xmax = width 
+    if(ymax>height):
+        ymax = height 
     
     if(xmin<0):
         xmin = 0
@@ -67,7 +62,7 @@ if __name__ == "__main__":
     '''
     This works when there is no overlap between mask regions. TODO: See if the can be extended to overlapping regions also.
     Example : 
-    python bounding_box_create.py --mask_path='/media/htic/NewVolume1/murali/mitosis/512_mask' --mask_ext='jpg' --xml_path='/media/htic/NewVolume1/murali/mitosis/512_xml'
+    python bounding_box_create.py --mask_path='/media/htic/NewVolume1/murali/mitosis/mitotic_count/mask_size_512_stride_128_updated' --mask_ext='jpg' --xml_path='/media/htic/NewVolume1/murali/mitosis/512_128_xml'
     '''
 
     # Receive inputs from user.
@@ -99,7 +94,10 @@ if __name__ == "__main__":
     mask_path  = opt.mask_path
     mask_ext   = opt.mask_ext
     xml_path   = opt.xml_path
-    mask_bounding_path   = '/media/htic/NewVolume1/murali/mitosis/512_mask_bound'
+    #mask_bounding_path   = '/media/htic/NewVolume1/murali/mitosis/mitotic_count/bounding_test'
+    min_area = 100
+    width = 512
+    height = 512
 
     if not os.path.exists(xml_path):
         os.mkdir(xml_path)
@@ -114,7 +112,7 @@ if __name__ == "__main__":
 
         # print each_mask_path
         mask_name_with_ext = os.path.basename(each_mask_path)
-        xml_name = mask_name_with_ext.replace('.jpg','.xml')
+        xml_name = mask_name_with_ext.replace('.'+mask_ext,'.xml')
         
         img_mask = cv2.imread(each_mask_path)
         img_mask_gray = cv2.cvtColor(img_mask,cv2.COLOR_BGR2GRAY)
@@ -142,16 +140,16 @@ if __name__ == "__main__":
             line_thickness = 2
 
             area_ = cv2.contourArea(c)
-            if area_ > 100:
+            if area_ > min_area:
                 cv2.rectangle(img_mask, (xmin,ymin), (xmax ,ymax),color, line_thickness)
                 obj = tree.find('object')
                 node = et.Element('bndbox')
                 obj.insert(1,node)
-                write_xml(root,xmin,ymin,xmax,ymax)
+                write_xml(root,xmin,ymin,xmax,ymax,width,height)
                 no_of_bounding_boxes += 1
-        # tree.write('1.xml')
+        tree.write(os.path.join(xml_path,xml_name))
 
-        write_img(img_mask,os.path.join(mask_bounding_path,mask_name_with_ext))
+        #write_img(img_mask,os.path.join(mask_bounding_path,mask_name_with_ext))
         # break
         # break
     # display_img(img_mask)

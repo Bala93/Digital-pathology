@@ -7,13 +7,13 @@
         <image>HTIC-Images</image>
     </source>
     <size>
-        <width>{540}</width>
-        <height>{540}</height>
-        <depth>{3}</depth>
+        <width>512</width>
+        <height>512</height>
+        <depth>3</depth>
     </size>
     <segmented>0</segmented>
     <object>
-        <name>{Mitotic}</name>
+        <name>Mitotic</name>
         <pose>Frontal</pose>
         <truncated>0</truncated>
         <occluded>0</occluded>
