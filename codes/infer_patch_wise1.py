@@ -12,6 +12,7 @@ import json
 from skimage.util import view_as_windows
 from skimage.io import imread
 import cv2
+import argparse
 
 from object_detection.utils import label_map_util
 from object_detection.utils import visualization_utils as vis_util
@@ -51,18 +52,45 @@ def get_sub_image(r_sample,g_sample,b_sample,row,col):
 if __name__ == "__main__":
 
     # Settings 
-    model_path = '/media/htic/NewVolume1/murali/Object_detection/models/research/models/model_mitosis/graph/mitosis/512_128/frozen_inference_graph.pb'
+
+    parser = argparse.ArgumentParser('Testing the model with test dataset')
+
+    parser.add_argument(
+        '--model_file',
+        required = True,
+        type = str,
+        help = 'The graph file path'
+    )
+
+    parser.add_argument(
+        '--result_path',
+        required = True,
+        type = str,
+        help = 'Path to which results should be saved'
+    )
+
+    parser.add_argument(
+        '--thresh',
+        required = True,
+        type = int,
+        help = 'Min score threshold'
+    )
+
+    opt = parser.parse_args()
+    model_path = opt.model_path
+    detection_out_path = '/media/htic/NewVolume1/murali/mitosis/mitotic_count/test_images/results/'
+    detection_out_path = opt.result_path
+    predicted_json_path = os.path.join(detection_out_path,'predicted_out.json')
+    min_score_thresh = opt.thresh
+
     image_yellow_path = '/media/htic/NewVolume1/murali/mitosis/mitotic_count/test_image_yellow'
     val_img_path    = '/media/htic/NewVolume1/murali/mitosis/mitotic_count/test_images/*.bmp'
     img_paths = glob.glob(val_img_path)
     label_path = '/media/htic/NewVolume1/murali/Object_detection/models/research/data/mitosis_label_map.pbtxt'
-    detection_out_path = '/media/htic/NewVolume1/murali/mitosis/mitotic_count/test_images/results/'
-    predicted_json_path = os.path.join(detection_out_path,'predicted_out.json')
     NUM_CLASSES = 1
     label_map = label_map_util.load_labelmap(label_path)
     categories = label_map_util.convert_label_map_to_categories(label_map,max_num_classes=NUM_CLASSES,use_display_name=True)
     category_index = label_map_util.create_category_index(categories)
-    min_score_thresh = 0.50
 
 
     # Initializing the graph
