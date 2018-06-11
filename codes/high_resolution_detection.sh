@@ -19,21 +19,25 @@ sample_img_path=${sample_save_path}/image_size_${size}_stride_${stride}
 sample_mask_path=${sample_save_path}/mask_size_${size}_stride_${stride}
 #matlab -nodisplay -nodesktop -r "mask_generate('${whole_mask_path}','${sample_mask_path}','${sample_img_path}');quit"
 
-# Do augmentation 
-#cd Augmentor
-#python augment_mitosis.py --inp_img_path=${sample_save_path}/image_size_${size}_stride_${stride}_updated --inp_mask_path=${sample_save_path}/mask_size_${size}_stride_${stride}_updated --out_img_path=${sample_save_path}/image_size_${size}_stride_${stride}_updated --out_mask_path=${sample_save_path}/mask_size_${size}_stride_${stride}_updated
-# find . -type f -print | awk -F/ 'length($NF) > 25'
+# Do augmentation
+# no_samples=25000
+# cd Augmentor
+# python augment_mitosis.py --inp_img_path=${sample_save_path}/image_size_${size}_stride_${stride}_updated --inp_mask_path=${sample_save_path}/mask_size_${size}_stride_${stride}_updated --out_img_path=${sample_save_path}/image_size_${size}_stride_${stride}_updated --out_mask_path=${sample_save_path}/mask_size_${size}_stride_${stride}_updated --no_samples=${no_samples}
 # cd ..
+#find . -type f -print | awk -F/ 'length($NF) > 25'
 
 # Create xml using created mask
-#python bounding_box_create.py --mask_path=${sample_save_path}/mask_size_${size}_stride_${stride}_updated --mask_ext=${sample_mask_ext} --xml_path=${sample_save_path}/xml_size_${size}_stride_${stride}
+# python bounding_box_create.py --mask_path=${sample_save_path}/mask_size_${size}_stride_${stride}_updated --mask_ext=${sample_mask_ext} --xml_path=${sample_save_path}/xml_size_${size}_stride_${stride}
 
 # Move the created images and xmls to object detection folder
-#cd /media/htic/NewVolume1/murali/Object_detection/models/research
-#rm images/*
-#rm annotations/xmls/*
-#cp ${sample_save_path}/image_size_${size}_stride_${stride}_updated/* images/
-#cp ${sample_save_path}/xml_size_${size}_stride_${stride}_32/* annotations/xmls/
+cd /media/htic/NewVolume1/murali/Object_detection/models/research/images/
+rm * 
+cd ${sample_save_path}/image_size_${size}_stride_${stride}_updated
+cp -v * /media/htic/NewVolume1/murali/Object_detection/models/research/images/
+cd /media/htic/NewVolume1/murali/Object_detection/models/research/annotation/xmls
+rm *
+cd ${sample_save_path}/xml_size_${size}_stride_${stride}/* 
+cp -v * /media/htic/NewVolume1/murali/Object_detection/models/annotations/xmls/
 
 # Create record files using image and mask files
 #python object_detection/dataset_tools/create_mitosis_tf_record.py --label_map_path=/media/htic/NewVolume1/murali/Object_detection/models/research/data/mitosis_label_map.pbtxt --data_dir=/media/htic/NewVolume1/murali/Object_detection/models/research --output_dir=/media/htic/NewVolume1/murali/Object_detection/models/research/data
