@@ -26,6 +26,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
+import argparse
+
 
 sns.set_style('white')
 sns.set_context('poster')
@@ -294,9 +296,20 @@ def plot_pr_curve(
 
 
 if __name__ == "__main__":
+    
+    parser = argparse.ArgumentParser('Metrics calculation')
 
-    gt_box = '/media/htic/NewVolume1/murali/mitosis/mitotic_count/' + 'ground_truth_boxes.json'
-    pred_box = '/media/htic/NewVolume1/murali/mitosis/mitotic_count/test_images/results/' + 'predicted_out.json'
+    parser.add_argument(
+        '--json_path',
+        required = True,
+        type = str,
+        help = 'provide path which contains the predicted json' 
+    )
+
+    opt = parser.parse_args()
+    pred_box = opt.json_path + 'predicted_out.json'
+
+    gt_box = '/media/htic/NewVolume1/murali/mitosis/mitotic_count/ground_truth_boxes.json'
   
     with open(gt_box) as infile:
         gt_boxes = json.load(infile)

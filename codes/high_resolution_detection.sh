@@ -44,7 +44,9 @@ sample_mask_path=${sample_save_path}/mask_size_${size}_stride_${stride}
 # Create graph
 #python object_detection/export_inference_graph.py --input_type image_tensor --pipeline_config_path=models/model_mitosis/faster_rcnn_resnet101_mitosis.config --trained_checkpoint_prefix=models/model_mitosis/train/${size}_${stride}/model.ckpt-12861 --output_directory=models/model_mitosis/graph/${size}_${stride}
 
-# Evaluation
-min_score_thresh=0.5
-echo python infer_patch_wise1.py --model_file=models/model_mitosis/graph/${size}_${stride}/frozen_inference_graph.pb --result_path=${sample_save_path}/results/${size}_${stride}  --thresh=${min_score_thresh}
+# Test data results 
+#min_score_thresh=0.5
+#python infer_patch_wise1.py --model_file=models/model_mitosis/graph/${size}_${stride}/frozen_inference_graph.pb --result_path=${sample_save_path}/results/${size}_${stride}  --thresh=${min_score_thresh}
+
+# Evaluation 
 
