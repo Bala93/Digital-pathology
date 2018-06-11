@@ -323,6 +323,11 @@ if __name__ == "__main__":
 
         precisions = data['precisions']
         recalls = data['recalls']
+        print("iteration (%d)",idx)
+        idx_max = np.argmax([(a*b) for a,b in zip(precisions,recalls)])
+        print("precision:",precisions[idx_max],"recall:",recalls[idx_max])
+        #idx_max = np.max(np.sum(precisions[i],recalls[i] for i in range(len(precisions))))
+
         ax = plot_pr_curve(
             precisions, recalls, label='{:.2f}'.format(iou_thr), color=COLORS[idx*2], ax=ax)
 

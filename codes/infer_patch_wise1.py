@@ -62,7 +62,7 @@ if __name__ == "__main__":
     label_map = label_map_util.load_labelmap(label_path)
     categories = label_map_util.convert_label_map_to_categories(label_map,max_num_classes=NUM_CLASSES,use_display_name=True)
     category_index = label_map_util.create_category_index(categories)
-    min_score_thresh = 0.85
+    min_score_thresh = 0.50
 
 
     # Initializing the graph
