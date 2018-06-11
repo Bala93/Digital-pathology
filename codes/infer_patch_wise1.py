@@ -78,7 +78,6 @@ if __name__ == "__main__":
 
     opt = parser.parse_args()
     model_path = opt.model_path
-    detection_out_path = '/media/htic/NewVolume1/murali/mitosis/mitotic_count/test_images/results/'
     detection_out_path = opt.result_path
     predicted_json_path = os.path.join(detection_out_path,'predicted_out.json')
     min_score_thresh = opt.thresh
