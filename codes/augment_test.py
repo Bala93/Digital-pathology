@@ -5,7 +5,7 @@ import argparse
 if __name__ == "__main__":
 
     '''
-    python augment_mitosis.py --inp_img_path=/media/htic/NewVolume1/murali/mitosis/mitotic_count/image_size_512_stride_32_updated --inp_mask_path=/media/htic/NewVolume1/murali/mitosis/mitotic_count/mask_size_512_stride_32_updated --out_img_path=/media/htic/NewVolume1/murali/mitosis/mitotic_count/image_size_512_stride_32_updated --out_mask_path=/media/htic/NewVolume1/murali/mitosis/mitotic_count/mask_size_512_stride_32_updated
+    python augment_test.py --inp_img_path=/media/htic/NewVolume1/murali/mitosis/mitotic_count/test_images --inp_mask_path=/media/htic/NewVolume1/murali/mitosis/mitotic_count/test_masks --out_img_path=/media/htic/NewVolume1/murali/mitosis/mitotic_count/test_images_augmented --out_mask_path=/media/htic/NewVolume1/murali/mitosis/mitotic_count/test_image_yellow_augmented --no_samples=120
     '''
 
     parser = argparse.ArgumentParser('Augment images with input image,mask folder and output path')
@@ -54,8 +54,8 @@ if __name__ == "__main__":
 
     p = Augmentor.Pipeline(source_directory=path_to_img,output_directory=out_img_path,ground_truth_output_directory=out_mask_path)
     p.ground_truth(path_to_mask)
-    p.flip_left_right(probability=0.5)
-    p.flip_top_bottom(probability=0.5)
-    #p.random_brightness(0.5,0.5,1)
-    #p.random_contrast(0.5,0.5,1)
+    p.flip_left_right(probability=0.8)
+    p.flip_top_bottom(probability=0.8)
+    p.random_brightness(0.5,0.5,1)
+    p.random_contrast(0.5,0.5,1)
     p.sample(no_samples) 

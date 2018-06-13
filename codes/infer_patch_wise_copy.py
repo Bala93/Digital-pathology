@@ -11,6 +11,7 @@ from tqdm import tqdm
 import json
 from skimage.util import view_as_windows
 from skimage.io import imread
+from skimage import transform
 import cv2
 import argparse
 
@@ -42,6 +43,10 @@ def get_sub_image(r_sample,g_sample,b_sample,row,col):
     sample_r = r_sample[row,col]
     sample_g = g_sample[row,col]
     sample_b = b_sample[row,col]
+    #Interpolation
+    sample_r = transform.rescale(sample_r,2)
+    sample_g = transform.rescale(sample_g,2)
+    sample_b = transform.rescale(sample_b,2)
 
     img_sample = np.dstack((sample_r,sample_g,sample_b))
 
@@ -82,8 +87,8 @@ if __name__ == "__main__":
     predicted_json_path = os.path.join(detection_out_path,'predicted_out.json')
     min_score_thresh = opt.thresh
 
-    image_yellow_path = '/media/htic/NewVolume1/murali/mitosis/mitotic_count/test_image_yellow'
-    val_img_path    = '/media/htic/NewVolume1/murali/mitosis/mitotic_count/test_images/*.bmp'
+    image_yellow_path = '/media/htic/NewVolume1/murali/mitosis/mitotic_count/test_image_yellow_augmented'
+    val_img_path    = '/media/htic/NewVolume1/murali/mitosis/mitotic_count/test_images_augmented/*.bmp'
     img_paths = glob.glob(val_img_path)
     label_path = '/media/htic/NewVolume1/murali/Object_detection/models/research/data/mitosis_label_map.pbtxt'
     NUM_CLASSES = 1
@@ -123,9 +128,9 @@ if __name__ == "__main__":
             ####################
 
             
-            window_shape = (512,512)
+            window_shape = (256,256)
             whole_image_dim = (2084,2084,3)
-            stride = 393 # check for maximum mitotic cell.
+            stride = 332 # check for maximum mitotic cell.
             count = 0
             
 
@@ -172,10 +177,10 @@ if __name__ == "__main__":
                         for coords in metric_box:
                             xmin,ymin,xmax,ymax = coords
 
-                            xmin = xmin + col * stride
-                            ymin = ymin + row * stride
-                            xmax = xmax + col * stride
-                            ymax = ymax + row * stride
+                            xmin = xmin/2 + col * stride
+                            ymin = ymin/2 + row * stride
+                            xmax = xmax/2 + col * stride
+                            ymax = ymax/2 + row * stride
 
                             area = (xmax - xmin) * (ymax - ymin)
 
@@ -204,7 +209,7 @@ if __name__ == "__main__":
                         # cv2.destroyAllWindows()
                 
 
-                #boxes,scores = non_max_suppression_fast(np.array(boxes),0.75,np.array(scores))   
+                boxes,scores = non_max_suppression_fast(np.array(boxes),0.75,np.array(scores))   
                 
                 [cv2.rectangle(whole_img,(xmin,ymin),(xmax,ymax),(0,255,0),3)for xmin,ymin,xmax,ymax in boxes]
                 

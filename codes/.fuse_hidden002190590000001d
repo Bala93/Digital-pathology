@@ -20,8 +20,8 @@ sample_mask_path=${sample_save_path}/mask_size_${size}_stride_${stride}
 #matlab -nodisplay -nodesktop -r "mask_generate('${whole_mask_path}','${sample_mask_path}','${sample_img_path}');quit"
 
 # Do augmentation
-#no_samples=20000
-#python augment_mitosis.py --inp_img_path=${sample_save_path}/image_size_${size}_stride_${stride}_updated --inp_mask_path=${sample_save_path}/mask_size_${size}_stride_${stride}_updated --out_img_path=${sample_save_path}/image_size_${size}_stride_${stride}_updated --out_mask_path=${sample_save_path}/mask_size_${size}_stride_${stride}_updated --no_samples=${no_samples}
+# no_samples=25000
+# python augment_mitosis.py --inp_img_path=${sample_save_path}/image_size_${size}_stride_${stride}_updated --inp_mask_path=${sample_save_path}/mask_size_${size}_stride_${stride}_updated --out_img_path=${sample_save_path}/image_size_${size}_stride_${stride}_updated --out_mask_path=${sample_save_path}/mask_size_${size}_stride_${stride}_updated --no_samples=${no_samples}
 #find . -type f -print | awk -F/ 'length($NF) > 25'
 
 # Create xml using created mask
@@ -42,9 +42,9 @@ sample_mask_path=${sample_save_path}/mask_size_${size}_stride_${stride}
 #python object_detection/dataset_tools/create_mitosis_tf_record.py --label_map_path=/media/htic/NewVolume1/murali/Object_detection/models/research/data/mitosis_label_map.pbtxt --data_dir=/media/htic/NewVolume1/murali/Object_detection/models/research --output_dir=/media/htic/NewVolume1/murali/Object_detection/models/research/data/mitosis/${size}_${stride}
 
 # Perform training
-#d /media/htic/NewVolume1/murali/Object_detection/models/research
-#xport PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
-#ython object_detection/train.py --logtostderr --pipeline_config_path=/media/htic/NewVolume1/murali/Object_detection/models/research/models/model_mitosis/faster_rcnn_resnet101_mitosis.config --train_dir=/media/htic/NewVolume1/murali/Object_detection/models/research/models/model_mitosis/train/${size}_${stride}
+#cd /media/htic/NewVolume1/murali/Object_detection/models/research
+#export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
+#python object_detection/train.py --logtostderr --pipeline_config_path=/media/htic/NewVolume1/murali/Object_detection/models/research/models/model_mitosis/faster_rcnn_resnet101_mitosis.config --train_dir=/media/htic/NewVolume1/murali/Object_detection/models/research/models/model_mitosis/train/${size}_${stride}
 
 # Create graph
 #cd /media/htic/NewVolume1/murali/Object_detection/models/research
@@ -56,7 +56,7 @@ sample_mask_path=${sample_save_path}/mask_size_${size}_stride_${stride}
 cd /media/htic/NewVolume1/murali/Object_detection/models/research
 export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
 min_score_thresh=0.5
-python infer_patch_wise_copy.py --model_file=models/model_mitosis/graph/${size}_${stride}/frozen_inference_graph.pb --result_path=${sample_save_path}/results/${size}_${stride}  --thresh=${min_score_thresh}
+python infer_patch_wise1.py --model_file=models/model_mitosis/graph/${size}_${stride}/frozen_inference_graph.pb --result_path=${sample_save_path}/results/${size}_${stride}  --thresh=${min_score_thresh}
 
 # Evaluation 
-#python calculate_mean_ap.py --json_path=${sample_save_path}/results/${size}_${stride}
+python calculate_mean_ap.py --json_path=${sample_save_path}/results/${size}_${stride}

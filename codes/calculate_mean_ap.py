@@ -307,7 +307,7 @@ if __name__ == "__main__":
     )
 
     opt = parser.parse_args()
-    pred_box = opt.json_path + 'predicted_out.json'
+    pred_box = os.path.join(opt.json_path,'predicted_out.json')
 
     gt_box = '/media/htic/NewVolume1/murali/mitosis/mitotic_count/ground_truth_boxes.json'
   

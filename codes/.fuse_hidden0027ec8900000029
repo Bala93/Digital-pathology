@@ -56,7 +56,7 @@ sample_mask_path=${sample_save_path}/mask_size_${size}_stride_${stride}
 cd /media/htic/NewVolume1/murali/Object_detection/models/research
 export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
 min_score_thresh=0.5
-python infer_patch_wise_copy.py --model_file=models/model_mitosis/graph/${size}_${stride}/frozen_inference_graph.pb --result_path=${sample_save_path}/results/${size}_${stride}  --thresh=${min_score_thresh}
+CUDA_VISIBLE_DEVICES=1 python infer_patch_wise_copy.py --model_file=models/model_mitosis/graph/${size}_${stride}/frozen_inference_graph.pb --result_path=${sample_save_path}/results/${size}_${stride}  --thresh=${min_score_thresh}
 
 # Evaluation 
 #python calculate_mean_ap.py --json_path=${sample_save_path}/results/${size}_${stride}
