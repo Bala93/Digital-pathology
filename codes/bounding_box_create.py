@@ -96,9 +96,7 @@ if __name__ == "__main__":
     xml_path   = opt.xml_path
     #mask_bounding_path   = '/media/htic/NewVolume1/murali/mitosis/mitotic_count/bounding_test'
     min_area = 100
-    width = 512
-    height = 512
-
+    
     if not os.path.exists(xml_path):
         os.mkdir(xml_path)
 
@@ -129,6 +127,9 @@ if __name__ == "__main__":
         root = tree.getroot()
         filename = root.find('filename')
         filename.text = mask_name_with_ext
+        size = root.find('size')
+        height = size.find('height')
+        width = size.find('width')
 
         for c in cnts:
             (x, y, w, h) = cv2.boundingRect(c)

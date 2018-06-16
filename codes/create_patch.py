@@ -1,6 +1,6 @@
 from __future__ import print_function
 from skimage import io
-from skimage.util import view_as_windows
+from skimage import util 
 import os
 import numpy as np
 from tqdm import tqdm
@@ -57,6 +57,23 @@ if __name__ == "__main__":
         type = str
     )
 
+    parser.add_argument(
+        '--pad',
+        required = False,
+        default = 0,
+        help = 'Pad given data(optional)',
+        type = int
+    )
+
+    parser.add_argument(
+        '--pad_mode',
+        required = False,
+        default = 'constant',
+        help = 'Pad mode(optional)',
+        type = str
+    )
+
+
     opt = parser.parse_args()    
     img_folder = opt.input_path
     # img_folder = '/media/balamurali/NewVolume2/Deep_network/mitosis'
@@ -66,6 +83,10 @@ if __name__ == "__main__":
     img_size   = opt.img_size
     img_stride = opt.stride
     input_type = opt.input_type
+    pad        = opt.pad
+    pad_mode   = opt.pad_mode
+
+    #print(pad,pad_mode) 
     
     stride_list = []
     window_shape_list = []
@@ -97,17 +118,23 @@ if __name__ == "__main__":
             for img_path in tqdm(imgs_path):
                 # Read image
                 img = io.imread(img_path)
+
+                #Pad image
+                if(pad):
+                    img = util.pad(img,((pad,pad),(pad,pad),(0,0)),pad_mode)
+                    print(img.shape)
+
                 print (len(img.shape))
                 if len(img.shape) == 3:
                     r_channel = img[:,:,0]
                     g_channel = img[:,:,1]
                     b_channel = img[:,:,2]
 
-                    r_sample = view_as_windows(r_channel,window_shape,step=stride)
-                    g_sample = view_as_windows(g_channel,window_shape,step=stride)
-                    b_sample = view_as_windows(b_channel,window_shape,step=stride)
+                    r_sample = util.view_as_windows(r_channel,window_shape,step=stride)
+                    g_sample = util.view_as_windows(g_channel,window_shape,step=stride)
+                    b_sample = util.view_as_windows(b_channel,window_shape,step=stride)
                 else:
-                    r_sample = view_as_windows(img,window_shape,step=stride)
+                    r_sample = util.view_as_windows(img,window_shape,step=stride)
 
                 no_of_rows = r_sample.shape[0]
                 no_of_cols = r_sample.shape[1]
@@ -128,3 +155,4 @@ if __name__ == "__main__":
                     # break
                 # break
             # break
+print('finish')

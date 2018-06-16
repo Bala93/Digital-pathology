@@ -1,17 +1,17 @@
 size=256
-stride=32
+stride=183
 whole_img_ext='bmp'
 whole_mask_ext='bmp'
 sample_mask_ext='jpg'
-whole_mask_path='/media/htic/NewVolume1/murali/mitosis/mitotic_count/whole_mask'
-whole_img_path='/media/htic/NewVolume1/murali/mitosis/mitotic_count/whole_images'
-sample_save_path='/media/htic/NewVolume1/murali/mitosis/mitotic_count'
+whole_mask_path='/media/htic/NewVolume1/murali/mitosis/mitotic_count/test_masks'
+whole_img_path='/media/htic/NewVolume1/murali/mitosis/mitotic_count/test_images'
+sample_save_path='/media/htic/NewVolume1/murali/mitosis/mitotic_count/test_images_sample'
 
 # Whole image
 #python create_patch.py --input_path=${whole_img_path} --output_path=${sample_save_path} --img_ext=${whole_img_ext} --stride=${stride} --img_size=${size} --input_type='image'
 
-# Sample image
-#python create_patch.py --input_path=${whole_mask_path} --output_path=${sample_save_path}  --img_ext=${whole_mask_ext} --stride=${stride} --img_size=${size} --input_type='mask'
+# Whole mask
+python create_patch.py --input_path=${whole_mask_path} --output_path=${sample_save_path}  --img_ext=${whole_mask_ext} --stride=${stride} --img_size=${size} --input_type='mask'
 
 # Remove unnecessary files including masks and images
 
@@ -47,17 +47,17 @@ sample_mask_path=${sample_save_path}/mask_size_${size}_stride_${stride}
 #ython object_detection/train.py --logtostderr --pipeline_config_path=/media/htic/NewVolume1/murali/Object_detection/models/research/models/model_mitosis/faster_rcnn_resnet101_mitosis.config --train_dir=/media/htic/NewVolume1/murali/Object_detection/models/research/models/model_mitosis/train/${size}_${stride}
 
 # Create graph
-cd /media/htic/NewVolume1/murali/Object_detection/models/research
-export CUDA_VISIBLE_DEVICES=1
-export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
-ckpt_no=9917
-python object_detection/export_inference_graph.py --input_type image_tensor --pipeline_config_path=models/model_mitosis/faster_rcnn_resnet101_mitosis.config --trained_checkpoint_prefix=models/model_mitosis/train/${size}_${stride}/model.ckpt-${ckpt_no} --output_directory=models/model_mitosis/graph/${size}_${stride}
+#cd /media/htic/NewVolume1/murali/Object_detection/models/research
+#export CUDA_VISIBLE_DEVICES=1
+#export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
+#ckpt_no=11318
+#python object_detection/export_inference_graph.py --input_type image_tensor --pipeline_config_path=models/model_mitosis/faster_rcnn_resnet101_mitosis.config --trained_checkpoint_prefix=models/model_mitosis/train/${size}_${stride}/model.ckpt-${ckpt_no} --output_directory=models/model_mitosis/graph/${size}_${stride}
 
 # Test data results 
 #cd /media/htic/NewVolume1/murali/Object_detection/models/research
 #export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
 #min_score_thresh=0.5
-#python infer_patch_wise_copy.py --model_file=models/model_mitosis/graph/${size}_${stride}/frozen_inference_graph.pb --result_path=${sample_save_path}/results/${size}_${stride}  --thresh=${min_score_thresh}
+#python infer_patch_wise_eval.py --model_file=models/model_mitosis/graph/${size}_${stride}/frozen_inference_graph.pb --result_path=${sample_save_path}/results/${size}_${stride}  --thresh=${min_score_thresh} 
 
 # Evaluation 
-#python calculate_mean_ap.py --json_path=${sample_save_path}/results/${size}_${stride}
+# python calculate_mean_ap.py --json_path=${sample_save_path}/results/${size}_${stride}

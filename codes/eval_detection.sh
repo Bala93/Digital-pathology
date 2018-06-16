@@ -42,7 +42,7 @@ sample_mask_path=${sample_save_path}/mask_size_${size}_stride_${stride}
 #python object_detection/dataset_tools/create_mitosis_tf_record.py --label_map_path=/media/htic/NewVolume1/murali/Object_detection/models/research/data/mitosis_label_map.pbtxt --data_dir=/media/htic/NewVolume1/murali/Object_detection/models/research --output_dir=/media/htic/NewVolume1/murali/Object_detection/models/research/data/mitosis/${size}_${stride}
 
 # Perform training
-#d /media/htic/NewVolume1/murali/Object_detection/models/research
+#cd /media/htic/NewVolume1/murali/Object_detection/models/research
 #xport PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
 #ython object_detection/train.py --logtostderr --pipeline_config_path=/media/htic/NewVolume1/murali/Object_detection/models/research/models/model_mitosis/faster_rcnn_resnet101_mitosis.config --train_dir=/media/htic/NewVolume1/murali/Object_detection/models/research/models/model_mitosis/train/${size}_${stride}
 
@@ -59,4 +59,4 @@ min_score_thresh=0.5
 python infer_patch_wise_eval.py --model_file=models/model_mitosis/graph/${size}_${stride}/frozen_inference_graph.pb --result_path=${sample_save_path}/results/${size}_${stride}  --thresh=${min_score_thresh}
 
 # Evaluation 
-python calculate_mean_ap.py --json_path=${sample_save_path}/results/${size}_${stride}
+#python calculate_mean_ap.py --json_path=${sample_save_path}/results/${size}_${stride}

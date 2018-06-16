@@ -5,7 +5,19 @@ import argparse
 if __name__ == "__main__":
 
     '''
-    python augment_mitosis.py --inp_img_path=/media/htic/NewVolume1/murali/mitosis/mitotic_count/image_size_512_stride_32_updated --inp_mask_path=/media/htic/NewVolume1/murali/mitosis/mitotic_count/mask_size_512_stride_32_updated --out_img_path=/media/htic/NewVolume1/murali/mitosis/mitotic_count/image_size_512_stride_32_updated --out_mask_path=/media/htic/NewVolume1/murali/mitosis/mitotic_count/mask_size_512_stride_32_updated
+    python augment_mitosis.py
+        --inp_img_path=/media/htic/NewVolume1/murali/mitosis/mitotic_count/image_size_512_stride_32_updated 
+        --inp_mask_path=/media/htic/NewVolume1/murali/mitosis/mitotic_count/mask_size_512_stride_32_updated 
+        --out_img_path=/media/htic/NewVolume1/murali/mitosis/mitotic_count/image_size_512_stride_32_updated 
+        --out_mask_path=/media/htic/NewVolume1/murali/mitosis/mitotic_count/mask_size_512_stride_32_updated 
+        --no_samples = 50
+
+    python augment_mitosis.py
+        --inp_img_path=/media/htic/Balamurali/GE_Project/Jun15-18/testSetImages-augmented//img
+        --inp_mask_path=/media/htic/Balamurali/GE_Project/Jun15-18/testSetImages-augmented//mask
+        --out_img_path=/media/htic/Balamurali/GE_Project/Jun15-18/testSetImages-augmented//img
+        --out_mask_path=/media/htic/Balamurali/GE_Project/Jun15-18/testSetImages-augmented//mask
+        --no_samples = 50
     '''
 
     parser = argparse.ArgumentParser('Augment images with input image,mask folder and output path')
@@ -44,7 +56,6 @@ if __name__ == "__main__":
         help = "No of samples"
     )
 
-
     opt  = parser.parse_args()
     path_to_img = opt.inp_img_path
     path_to_mask = opt.inp_mask_path
@@ -54,12 +65,7 @@ if __name__ == "__main__":
 
     p = Augmentor.Pipeline(source_directory=path_to_img,output_directory=out_img_path,ground_truth_output_directory=out_mask_path)
     p.ground_truth(path_to_mask)
+    p.rotate(probability=1,max_left_rotation=10,max_right_rotation=10)
     p.flip_left_right(probability=0.5)
     p.flip_top_bottom(probability=0.5)
-    
-
-    
-
-    #p.random_brightness(0.5,0.5,1)
-    #p.random_contrast(0.5,0.5,1)
     p.sample(no_samples) 

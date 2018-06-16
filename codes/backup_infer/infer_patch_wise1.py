@@ -72,12 +72,13 @@ if __name__ == "__main__":
     parser.add_argument(
         '--thresh',
         required = True,
-        type = int,
+        type = float,
         help = 'Min score threshold'
     )
 
     opt = parser.parse_args()
-    model_path = opt.model_path
+    model_path = opt.model_file
+    detection_out_path = '/media/htic/NewVolume1/murali/mitosis/mitotic_count/test_images/results/'
     detection_out_path = opt.result_path
     predicted_json_path = os.path.join(detection_out_path,'predicted_out.json')
     min_score_thresh = opt.thresh
@@ -204,7 +205,7 @@ if __name__ == "__main__":
                         # cv2.destroyAllWindows()
                 
 
-                #boxes,scores = non_max_suppression_fast(np.array(boxes),0.75,np.array(scores))   
+                boxes,scores = non_max_suppression_fast(np.array(boxes),0.5,np.array(scores))   
                 
                 [cv2.rectangle(whole_img,(xmin,ymin),(xmax,ymax),(0,255,0),3)for xmin,ymin,xmax,ymax in boxes]
                 
@@ -216,7 +217,7 @@ if __name__ == "__main__":
                 
                 yellow_img = cv2.imread(yellow_cell_img_path)
                 res_img = cv2.add(yellow_img,whole_img)
-                cv2.imwrite(detection_out_path + file_name ,res_img)
+                cv2.imwrite(os.path.join(detection_out_path,file_name) ,res_img)
                 
 
             with open(predicted_json_path,'w') as f:

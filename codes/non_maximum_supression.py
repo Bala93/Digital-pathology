@@ -51,7 +51,7 @@ def non_max_suppression_fast(boxes, overlapThresh,scores):
 		# compute the ratio of overlap
 		overlap = (w * h) / area[idxs[:last]]
  
-		# delete all indexes from the index list that have
+		# delete all indexes from the index list that have overlap<overlapthresh
 		idxs = np.delete(idxs, np.concatenate(([last],
 			np.where(overlap > overlapThresh)[0])))
  

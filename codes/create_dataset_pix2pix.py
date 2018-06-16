@@ -15,11 +15,11 @@ if __name__ == "__main__":
 
     # This has to received from the user. 
     img_ext     = 'jpg'
-    mask_ext    = 'png'
-    img_path    = '/media/balamurali/New Volume2/IIT-HTIC/GE_Project/Pix2Pix/Pix2Pix-Dataset'
-    mask_path   = '/media/balamurali/New Volume2/IIT-HTIC/GE_Project/Pix2Pix/Pix2Pix-DatasetBinaryMask'
-    out_path    = '/media/balamurali/New Volume2/IIT-HTIC/GE_Project/Pix2Pix'
-    split_ratio = 0.8 # Train and test split
+    mask_ext    = 'jpg'
+    img_path    = '/media/htic/NewVolume1/murali/mitosis/mitotic_count/image_size_256_stride_32_updated'
+    mask_path   = '/media/htic/NewVolume1/murali/mitosis/mitotic_count/mask_size_256_stride_32_updated'
+    out_path    = '/media/htic/NewVolume1/murali/mitosis/mitotic_segment'
+    split_ratio =  0# Train and test split
     #######################
 
     # A - Image, B - Mask
