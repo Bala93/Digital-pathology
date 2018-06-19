@@ -49,6 +49,20 @@ import os
 
 plt.ion()   # interactive mode
 
+
+class MyImageFolder(datasets.ImageFolder):
+    def __getitem__(self,index):
+        path,target = self.imgs[index]
+        img = self.loader(path)
+        if self.transform is not None:
+            img = self.transform(img)
+        if self.target_transform is not None:
+            target = self.target_transform(target)
+        
+        return img,target,path
+                    
+
+
 ######################################################################
 # Load Data
 # ---------
@@ -87,12 +101,12 @@ data_transforms = {
     ]),
 }
 
-data_dir = '/media/htic/NewVolume1/murali/GE_project/status/dataset/'
+data_dir = '/media/htic/NewVolume1/murali/mitosis/bach18/scale_16_train_val'
 
-image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x),
+image_datasets = {x: MyImageFolder(os.path.join(data_dir, x),
                                           data_transforms[x])
                   for x in ['train', 'val']}
-dataloders = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=4,
+dataloaders = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=4,
                                              shuffle=True, num_workers=4)
               for x in ['train', 'val']}
 dataset_sizes = {x: len(image_datasets[x]) for x in ['train', 'val']}
@@ -119,7 +133,7 @@ def imshow(inp, title=None):
 
 
 # Get a batch of training data
-inputs, classes = next(iter(dataloders['train']))
+inputs, classes,_ = next(iter(dataloaders['train']))
 
 # Make a grid from batch
 out = torchvision.utils.make_grid(inputs)
@@ -163,9 +177,9 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=2):
             running_corrects = 0
 
             # Iterate over data.
-            for data in dataloders[phase]:
+            for data in dataloaders[phase]:
                 # get the inputs
-                inputs, labels = data
+                inputs, labels, _ = data
 
                 # wrap them in Variable
                 if use_gpu:
@@ -180,6 +194,9 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=2):
                 # forward
                 outputs = model(inputs)
                 _, preds = torch.max(outputs.data, 1)
+
+
+
                 loss = criterion(outputs, labels)
 
                 # backward + optimize only if in training phase
@@ -225,7 +242,7 @@ def visualize_model(model, num_images=6):
     images_so_far = 0
     fig = plt.figure()
 
-    for i, data in enumerate(dataloders['val']):
+    for i, data,_ in enumerate(dataloaders['val']):
         inputs, labels = data
         if use_gpu:
             inputs, labels = Variable(inputs.cuda()), Variable(labels.cuda())
@@ -279,7 +296,7 @@ model_ft = train_model(model_ft, criterion, optimizer_ft, exp_lr_scheduler,
                        num_epochs=25)
     
 # model_ft.save_state_dict('/media/htic/NewVolume1/murali/mitosis/weight/whole_slide.pt')
-torch.save(model_ft.state_dict(),'/media/htic/NewVolume1/murali/mitosis/weight/whole_slide.pt')
+torch.save(model_ft.state_dict(),'/media/htic/NewVolume1/murali/mitosis/bach18/model/bach18.pt')
 
 ######################################################################
 #

@@ -13,11 +13,15 @@ if __name__ == "__main__":
         --no_samples = 50
 
     python augment_mitosis.py
-        --inp_img_path=/media/htic/Balamurali/GE_Project/Jun15-18/testSetImages-augmented//img
-        --inp_mask_path=/media/htic/Balamurali/GE_Project/Jun15-18/testSetImages-augmented//mask
-        --out_img_path=/media/htic/Balamurali/GE_Project/Jun15-18/testSetImages-augmented//img
-        --out_mask_path=/media/htic/Balamurali/GE_Project/Jun15-18/testSetImages-augmented//mask
+        --inp_img_path=/media/htic/Balamurali/GE_Project/Jun15-18/testSetImages-augmented/open/img 
+        --inp_mask_path=/media/htic/Balamurali/GE_Project/Jun15-18/testSetImages-augmented/open/mask
+        --out_img_path=/media/htic/Balamurali/GE_Project/Jun15-18/testSetImages-augmented/open/img
+        --out_mask_path=/media/htic/Balamurali/GE_Project/Jun15-18/testSetImages-augmented/open/mask
         --no_samples = 50
+
+    python augment_mitosis.py --inp_img_path=/media/htic/Balamurali/GE_Project/Jun15-18/testSetImages-augmented/unknown/img --inp_mask_path=/media/htic/Balamurali/GE_Project/Jun15-18/testSetImages-augmented/unknown/mask --out_img_path=/media/htic/Balamurali/GE_Project/Jun15-18/testSetImages-augmented/unknown/img --out_mask_path=/media/htic/Balamurali/GE_Project/Jun15-18/testSetImages-augmented/unknown/mask --no_samples=50
+
+
     '''
 
     parser = argparse.ArgumentParser('Augment images with input image,mask folder and output path')

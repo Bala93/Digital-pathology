@@ -59,4 +59,4 @@ sample_mask_path=${sample_save_path}/mask_size_${size}_stride_${stride}
 #python infer_patch_wise_copy.py --model_file=models/model_mitosis/graph/${size}_${stride}/frozen_inference_graph.pb --result_path=${sample_save_path}/results/${size}_${stride}  --thresh=${min_score_thresh}
 
 # Evaluation 
-#python calculate_mean_ap.py --json_path=${sample_save_path}/results/${size}_${stride}
+python calculate_mean_ap.py --json_path=${sample_save_path}/results/${size}_${stride}

@@ -83,7 +83,7 @@ if __name__ == "__main__":
     img_size   = opt.img_size
     img_stride = opt.stride
     input_type = opt.input_type
-    pad        = opt.pad
+    pad_width  = opt.pad
     pad_mode   = opt.pad_mode
 
     #print(pad,pad_mode) 
@@ -120,8 +120,8 @@ if __name__ == "__main__":
                 img = io.imread(img_path)
 
                 #Pad image
-                if(pad):
-                    img = util.pad(img,((pad,pad),(pad,pad),(0,0)),pad_mode)
+                if(pad_width):
+                    img = util.pad(img,((pad_width,pad_width),(pad_width,pad_width),(0,0)),pad_mode)
                     print(img.shape)
 
                 print (len(img.shape))
