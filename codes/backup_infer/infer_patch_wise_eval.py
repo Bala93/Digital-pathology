@@ -185,9 +185,9 @@ if __name__ == "__main__":
             ####################
 
             
-            window_shape = (256,256)
+            window_shape = (512,512)
             whole_image_dim = (2084,2084,3)
-            stride = 457 #393 # check for maximum mitotic cell.
+            stride = 393 #457  # check for maximum mitotic cell.
             
             # augmented_whole_image_box = {}
             #count = 0          
@@ -250,19 +250,20 @@ if __name__ == "__main__":
 
                             boxes +=  updated_metric_box
                             scores += metric_scores
-                            
-                np_boxes  = np.array(boxes)
-                np_scores = np.array(scores)
-                boxes,scores = non_max_suppression_fast(np_boxes,0.5,np_scores)
-                metric_json[file_name]['boxes'] = boxes
-                metric_json[file_name]['scores'] = scores
+                print (len(boxes))
+                if(len(boxes)>0):   
+                    np_boxes  = np.array(boxes)
+                    np_scores = np.array(scores)
+                    boxes,scores = non_max_suppression_fast(np_boxes,0.75,np_scores)
+                    metric_json[file_name]['boxes'] = boxes
+                    metric_json[file_name]['scores'] = scores
 
-                [cv2.rectangle(gt_box_img,(xmin,ymin),(xmax,ymax),(0,0,0),5)for xmin,ymin,xmax,ymax in boxes]
-                    # cv2.namedWindow('win',cv2.WINDOW_NORMAL)
-                    # cv2.imshow('win',gt_box_img)
-                    # cv2.waitKey(0)
-                    # cv2.destroyAllWindows()
-                cv2.imwrite(os.path.join(detection_out_path,file_name) ,gt_box_img)
+                    [cv2.rectangle(gt_box_img,(xmin,ymin),(xmax,ymax),(0,0,0),5)for xmin,ymin,xmax,ymax in boxes]
+                        # cv2.namedWindow('win',cv2.WINDOW_NORMAL)
+                        # cv2.imshow('win',gt_box_img)
+                        # cv2.waitKey(0)
+                        # cv2.destroyAllWindows()
+                    cv2.imwrite(os.path.join(detection_out_path,file_name) ,gt_box_img)
 
             with open(predicted_json_path,'w') as f:
                  json.dump(metric_json,f)

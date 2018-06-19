@@ -21,6 +21,9 @@ def load_image_into_numpy_array(image):
         
 if __name__ == "__main__":
 
+
+
+
     # Settings 
     # print "IN"
     model_path = '/media/htic/NewVolume1/murali/Object_detection/models/research/models/model_clamp/graph/frozen_inference_graph.pb'
