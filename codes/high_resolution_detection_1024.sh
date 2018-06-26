@@ -1,4 +1,4 @@
-size=512
+size=1024
 stride=32
 whole_img_ext='bmp'
 whole_mask_ext='bmp'
@@ -51,9 +51,9 @@ sample_mask_path=${sample_save_path}/mask_size_${size}_stride_${stride}
 
 #echo "Start Training..."
 # Perform training
-#cd /media/htic/NewVolume1/murali/Object_detection/models/research
-#export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
-#python object_detection/train.py --logtostderr --pipeline_config_path=/media/htic/NewVolume1/murali/Object_detection/models/research/models/model_mitosis/faster_rcnn_resnet101_mitosis.config --train_dir=/media/htic/NewVolume1/murali/Object_detection/models/research/models/model_mitosis/train/${size}_${stride}_normalized
+cd /media/htic/NewVolume1/murali/Object_detection/models/research
+export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
+python object_detection/train.py --logtostderr --pipeline_config_path=/media/htic/NewVolume1/murali/Object_detection/models/research/models/model_mitosis/faster_rcnn_resnet101_mitosis.config --train_dir=/media/htic/NewVolume1/murali/Object_detection/models/research/models/model_mitosis/train/${size}_${stride}_normalized
 
 # Create graph
 # NOTE: Remove respective Graph Directory before execution.
@@ -65,11 +65,11 @@ sample_mask_path=${sample_save_path}/mask_size_${size}_stride_${stride}
 #Stain Normalize Test Image
 
 # Test data results 
-cd /media/htic/NewVolume1/murali/Object_detection/models/research
-export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
-min_score_thresh=0.50
-python infer_patch_wise_eval.py --model_file=models/model_mitosis/graph/${size}_${stride}_normalized/frozen_inference_graph.pb --result_path=${sample_save_path}/results/${size}_${stride}_normalized  --thresh=${min_score_thresh}
+#cd /media/htic/NewVolume1/murali/Object_detection/models/research
+#export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
+#min_score_thresh=0.50
+#python infer_patch_wise_eval.py --model_file=models/model_mitosis/graph/${size}_${stride}_normalized/frozen_inference_graph.pb --result_path=${sample_save_path}/results/${size}_${stride}_normalized  --thresh=${min_score_thresh}
 
 #Evaluation 
-cd /media/htic/NewVolume1/murali/mitosis/codes/Digital-pathology/codes
-python calculate_mean_ap.py --json_path=${sample_save_path}/results/${size}_${stride}_normalized
+#cd /media/htic/NewVolume1/murali/mitosis/codes/Digital-pathology/codes
+#python calculate_mean_ap.py --json_path=${sample_save_path}/results/${size}_${stride}_normalized

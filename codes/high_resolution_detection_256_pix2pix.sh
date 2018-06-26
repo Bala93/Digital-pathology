@@ -23,5 +23,5 @@ sample_save_path='/media/htic/NewVolume1/murali/mitosis/mitotic_count/test_image
 #python combine_A_and_B.py --fold_A '/media/htic/NewVolume1/murali/mitosis/mitotic_segment/test/A' --fold_B '/media/htic/NewVolume1/murali/mitosis/mitotic_segment/test/B' --fold_AB '/media/htic/NewVolume1/murali/mitosis/mitotic_segment/test/AB' 
 
 #Run test.py
-cd /media/htic/NewVolume1/murali/pytorch-CycleGAN-and-pix2pix
-sh test.sh
+#cd /media/htic/NewVolume1/murali/pytorch-CycleGAN-and-pix2pix
+#sh test.sh

@@ -6,6 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import argparse
 import imutils
+import shutil
 from tqdm import tqdm
 
 
@@ -63,6 +64,7 @@ if __name__ == "__main__":
     This works when there is no overlap between mask regions. TODO: See if the can be extended to overlapping regions also.
     Example : 
     python bounding_box_create.py --mask_path='/media/htic/NewVolume1/murali/mitosis/mitotic_count/mask_size_512_stride_128_updated' --mask_ext='jpg' --xml_path='/media/htic/NewVolume1/murali/mitosis/512_128_xml'
+    TODO: Add the height and width using the mask size
     '''
 
     # Receive inputs from user.
@@ -99,7 +101,9 @@ if __name__ == "__main__":
     
     if not os.path.exists(xml_path):
         os.mkdir(xml_path)
-
+    #else:
+    #    shutil.rmtree(xml_path)
+    #    os.mkdir(xml_path)
 
     mask_path_ext = os.path.join(mask_path , '*.' + mask_ext)
     mask_images_path = glob.glob(mask_path_ext)
@@ -108,11 +112,15 @@ if __name__ == "__main__":
 
     for each_mask_path in tqdm(mask_images_path):
 
+        cnts_flag = 0
+        area_flag = 0
         # print each_mask_path
         mask_name_with_ext = os.path.basename(each_mask_path)
         xml_name = mask_name_with_ext.replace('.'+mask_ext,'.xml')
         
         img_mask = cv2.imread(each_mask_path)
+        
+
         img_mask_gray = cv2.cvtColor(img_mask,cv2.COLOR_BGR2GRAY)
         _,im_bw = cv2.threshold(img_mask_gray, 200, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
         kernel = np.ones([5,5],np.uint8)
@@ -120,6 +128,9 @@ if __name__ == "__main__":
         dilation = cv2.dilate(im_bw,kernel,iterations=3)
         cnts = cv2.findContours(dilation, cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
         cnts = cnts[0] if imutils.is_cv2() else cnts[1]
+        if(cnts):
+            cnts_flag = 1
+        #print(cnts_flag) 
         eps = 5
 
 
@@ -128,9 +139,11 @@ if __name__ == "__main__":
         filename = root.find('filename')
         filename.text = mask_name_with_ext
         size = root.find('size')
-        height = size.find('height')
-        width = size.find('width')
 
+
+        height = int(size.find('height').text)
+        width = int(size.find('width').text)
+        
         for c in cnts:
             (x, y, w, h) = cv2.boundingRect(c)
             xmin = x - eps
@@ -148,8 +161,13 @@ if __name__ == "__main__":
                 obj.insert(1,node)
                 write_xml(root,xmin,ymin,xmax,ymax,width,height)
                 no_of_bounding_boxes += 1
-        tree.write(os.path.join(xml_path,xml_name))
-
+                area_flag = 1
+        #Write to xml only for files which return a bounding box.        
+        if(area_flag and cnts_flag):
+            tree.write(os.path.join(xml_path,xml_name))
+        #else:
+        #    print(each_mask_path,area_flag,cnts_flag)
+    
         #write_img(img_mask,os.path.join(mask_bounding_path,mask_name_with_ext))
         # break
         # break

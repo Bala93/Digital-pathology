@@ -242,8 +242,8 @@ def visualize_model(model, num_images=6):
     images_so_far = 0
     fig = plt.figure()
 
-    for i, data,_ in enumerate(dataloaders['val']):
-        inputs, labels = data
+    for i, data,in enumerate(dataloaders['val']):
+        inputs, labels,_ = data
         if use_gpu:
             inputs, labels = Variable(inputs.cuda()), Variable(labels.cuda())
         else:
@@ -296,8 +296,8 @@ model_ft = train_model(model_ft, criterion, optimizer_ft, exp_lr_scheduler,
                        num_epochs=25)
     
 # model_ft.save_state_dict('/media/htic/NewVolume1/murali/mitosis/weight/whole_slide.pt')
-torch.save(model_ft.state_dict(),'/media/htic/NewVolume1/murali/mitosis/bach18/model/bach18.pt')
-
+# torch.save(model_ft.state_dict(),'/media/htic/NewVolume1/murali/mitosis/bach18/model/bach18.pt')
+torch.save(model_ft,'/media/htic/NewVolume1/murali/mitosis/bach18/model/bach18.pt')
 ######################################################################
 #
 

@@ -19,7 +19,8 @@ if __name__ == "__main__":
         --out_mask_path=/media/htic/Balamurali/GE_Project/Jun19-18/trainingSetImages-augmented/unknown/mask
         --no_samples = 50
 
-    python augment_clamp.py --inp_img_path=/media/htic/Balamurali/GE_Project/Jun26-18/trainingSetImages/unknown/img --inp_mask_path=/media/htic/Balamurali/GE_Project/Jun26-18/trainingSetImages/unknown/mask --out_img_path=/media/htic/Balamurali/GE_Project/Jun26-18/trainingSetImages/unknown/img --out_mask_path=/media/htic/Balamurali/GE_Project/Jun26-18/trainingSetImages/unknown/mask --no_samples=5000
+    python augment_mitosis.py --inp_img_path=/media/htic/Balamurali/GE_Project/Jun19-18/trainingSetImages-augmented/unknown/img --inp_mask_path=/media/htic/Balamurali/GE_Project/Jun19-18/trainingSetImages-augmented/unknown/mask --out_img_path=/media/htic/Balamurali/GE_Project/Jun19-18/trainingSetImages-augmented/unknown/img --out_mask_path=/media/htic/Balamurali/GE_Project/Jun19-18/trainingSetImages-augmented/unknown/mask --no_samples=500
+
     '''
 
     parser = argparse.ArgumentParser('Augment images with input image,mask folder and output path')
@@ -67,8 +68,7 @@ if __name__ == "__main__":
 
     p = Augmentor.Pipeline(source_directory=path_to_img,output_directory=out_img_path,ground_truth_output_directory=out_mask_path)
     p.ground_truth(path_to_mask)
-    p.rotate(probability=1,max_left_rotation=5,max_right_rotation=5)
-    p.flip_left_right(probability=1)
-    p.flip_top_bottom(probability=1)
-    p.rotate_random_90(probability=1)
+    p.rotate(probability=1,max_left_rotation=25,max_right_rotation=25)
+    p.flip_left_right(probability=0.5)
+    p.flip_top_bottom(probability=0.5)
     p.sample(no_samples) 

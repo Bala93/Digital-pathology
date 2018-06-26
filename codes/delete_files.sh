@@ -1,0 +1,11 @@
+rm /media/htic/NewVolume1/murali/Object_detection/models/research/annotations/xmls/25_18_23_b1643710-a479-4e88-827a-5d4a8ccf31fc.xml
+rm /media/htic/NewVolume1/murali/Object_detection/models/research/images/25_18_23_b1643710-a479-4e88-827a-5d4a8ccf31fc.jpg
+rm /media/htic/NewVolume1/murali/Object_detection/models/research/annotations/xmls/21_39_40_1daa7647-2af7-4e95-8266-d6669b0a272f.xml
+rm /media/htic/NewVolume1/murali/Object_detection/models/research/images/21_39_40_1daa7647-2af7-4e95-8266-d6669b0a272f.jpg
+rm /media/htic/NewVolume1/murali/Object_detection/models/research/annotations/xmls/12_14_35_2657d68e-5dfd-4125-91e1-ba8f6b1417a9.xml
+rm /media/htic/NewVolume1/murali/Object_detection/models/research/images/12_14_35_2657d68e-5dfd-4125-91e1-ba8f6b1417a9.jpg
+rm /media/htic/NewVolume1/murali/Object_detection/models/research/annotations/xmls/11_44_39_5a0d6c42-3b33-4e5d-b71b-46ed7681369f.xml
+rm /media/htic/NewVolume1/murali/Object_detection/models/research/images/11_44_39_5a0d6c42-3b33-4e5d-b71b-46ed7681369f.jpg
+rm /media/htic/NewVolume1/murali/Object_detection/models/research/annotations/xmls/13_17_20_e925abd4-09b3-4181-952c-95305dc3d5c0.xml
+rm /media/htic/NewVolume1/murali/Object_detection/models/research/images/13_17_20_e925abd4-09b3-4181-952c-95305dc3d5c0.jpg
+rm /media/htic/NewVolume1/murali/Object_detection/models/research/annotations/xmls/18_33_21_daaf5a57-ea39-45d2-832b-4c12a8b328b0.xml

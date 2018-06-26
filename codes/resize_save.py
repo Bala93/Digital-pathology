@@ -3,13 +3,36 @@ from skimage.transform import rescale
 import glob
 import os
 from tqdm import tqdm
+import argparse
 
-src_img_path = '/media/htic/NewVolume1/murali/mitosis/mitotic_count/image_size_256_stride_32_updated'
-dst_img_path = '/media/htic/NewVolume1/murali/mitosis/mitotic_count/image_resize_512_stride_32_updated'
-src_mask_path = '/media/htic/NewVolume1/murali/mitosis/mitotic_count/mask_size_256_stride_32_updated'
-dst_mask_path = '/media/htic/NewVolume1/murali/mitosis/mitotic_count/mask_resize_512_stride_32_updated'
 
-img_ext = 'jpg'
+## The mask and image are assumed to be of same dimensions.
+'''
+python resize_save.py --input_img_path --input_mask_path --output_img_path --output_mask_path --img_ext --scale
+'''
+
+parser = argparse.ArgumentParser(description='Resize images in a folder and move to new folder')
+
+parser.add_argument('--input_img_path',required = True, type = str, help = 'provide input_path file')
+parser.add_argument('--input_mask_path',required = True, type = str, help = 'provide input_path file')
+
+parser.add_argument('--output_img_path',required = True, type = str,help = 'provide output_path file')
+parser.add_argument('--output_mask_path',required = True, type = str,help = 'provide output_path file')
+
+parser.add_argument('--img_ext',required = True, type = str,help='provide image extension')
+
+parser.add_argument('--scale',required = True , type = int,help = 'rescale factor')
+
+opt = parser.parse_args()
+
+src_img_path = opt.input_img_path
+dst_img_path = opt.output_img_path
+src_mask_path = opt.input_mask_path
+dst_mask_path = opt.output_mask_path
+
+img_ext     = opt.img_ext
+#mask_ext    = opt.mask_ext 
+scale       = opt.scale
 
 src_imgs = glob.glob(src_img_path + '/*' + img_ext)
 
@@ -21,12 +44,11 @@ for img_path in tqdm(src_imgs):
     dst_img  = os.path.join(dst_img_path,file_name)
     dst_mask = os.path.join(dst_mask_path,file_name)
 
-
     img = io.imread(src_img)
     mask = io.imread(src_mask)
 
-    img_rescale  = rescale(img,2,order=3)
-    mask_rescale = rescale(mask,2,order=3)
+    img_rescale  = rescale(img,scale,order=3)
+    mask_rescale = rescale(mask,scale,order=3)
 
 
     io.imsave(dst_img,img_rescale)

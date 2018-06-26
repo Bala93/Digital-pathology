@@ -277,7 +277,7 @@ def get_avg_precision_at_iou(gt_boxes, pred_boxes, iou_thr=0.5):
 
 
 def plot_pr_curve(
-    precisions, recalls, category='Person', label=None, color=None, ax=None):
+    precisions, recalls, category='Mitosis', label=None, color=None, ax=None):
     """Simple plotting helper function"""
 
     if ax is None:
@@ -318,7 +318,7 @@ if __name__ == "__main__":
         pred_boxes = json.load(infile)
 
     # Runs it for one IoU threshold
-    iou_thr = 0.7
+    iou_thr = 0.6
     start_time = time.time()
     data = get_avg_precision_at_iou(gt_boxes, pred_boxes, iou_thr=iou_thr)
     end_time = time.time()
@@ -337,8 +337,8 @@ if __name__ == "__main__":
         precisions = data['precisions']
         recalls = data['recalls']
         print("iteration (%d)",idx)
-        #idx_max = np.argmax([(a*b) for a,b in zip(precisions,recalls)])
-        #print("precision:",precisions[idx_max],"recall:",recalls[idx_max])
+        idx_max = np.argmax([(2*p*r)/(p+r) for p,r in zip(precisions,recalls)])
+        print("precision:",precisions[idx_max],"recall:",recalls[idx_max],"F1 Score:",2*precisions[idx_max]*recalls[idx_max]/(precisions[idx_max]+recalls[idx_max]))
         idx_max_recall = np.argmax(r for r in recalls)
         print("precision:",precisions[idx_max_recall],"recall:",recalls[idx_max_recall])
         #idx_max = np.max(np.sum(precisions[i],recalls[i] for i in range(len(precisions))))
