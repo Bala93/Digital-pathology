@@ -59,7 +59,7 @@ sample_mask_path=${sample_save_path}/mask_size_${size}_stride_${stride}
 # NOTE: Remove respective Graph Directory before execution.
 #cd /media/htic/NewVolume1/murali/Object_detection/models/research
 #export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
-#ckpt_no=170854 #76570 67453 66359 65260 68534 9677  64162 
+#ckpt_no=9249 #75603 #76570 67453 66359 65260 68534 9677  64162 
 #python object_detection/export_inference_graph.py --input_type image_tensor --pipeline_config_path=models/model_mitosis/faster_rcnn_resnet101_mitosis.config --trained_checkpoint_prefix=models/model_mitosis/train/${size}_${stride}_normalized/model.ckpt-${ckpt_no} --output_directory=models/model_mitosis/graph/${size}_${stride}_normalized
 
 #Stain Normalize Test Image
@@ -67,9 +67,9 @@ sample_mask_path=${sample_save_path}/mask_size_${size}_stride_${stride}
 # Test data results 
 cd /media/htic/NewVolume1/murali/Object_detection/models/research
 export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
-min_score_thresh=0.50
-python infer_patch_wise_eval.py --model_file=models/model_mitosis/graph/${size}_${stride}_normalized/frozen_inference_graph.pb --result_path=${sample_save_path}/results/${size}_${stride}_normalized  --thresh=${min_score_thresh}
+min_score_thresh=0.3
+python infer_patch_wise_eval.py --model_file=/media/htic/NewVolume1/murali/mitosis/mitotic_count/results/backup/512_32_normalized_ckpt75930+9249/frozen_inference_graph.pb --result_path=${sample_save_path}/results/${size}_${stride}_normalized  --thresh=${min_score_thresh}
 
 #Evaluation 
-cd /media/htic/NewVolume1/murali/mitosis/codes/Digital-pathology/codes
-python calculate_mean_ap.py --json_path=${sample_save_path}/results/${size}_${stride}_normalized
+#cd /media/htic/NewVolume1/murali/mitosis/codes/Digital-pathology/codes
+#python calculate_mean_ap.py --json_path=${sample_save_path}/results/${size}_${stride}_normalized

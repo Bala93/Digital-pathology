@@ -341,7 +341,10 @@ if __name__ == "__main__":
         print("precision:",precisions[idx_max],"recall:",recalls[idx_max],"F1 Score:",2*precisions[idx_max]*recalls[idx_max]/(precisions[idx_max]+recalls[idx_max]))
         idx_max_recall = np.argmax(r for r in recalls)
         print("precision:",precisions[idx_max_recall],"recall:",recalls[idx_max_recall])
-        #idx_max = np.max(np.sum(precisions[i],recalls[i] for i in range(len(precisions))))
+        idxs = [i for i in range(len(precisions)) if recalls[i]>=0.8]
+        #print (idxs)
+        for idx_ in idxs:
+            print("precision:",precisions[idx_],"recall:",recalls[idx_])
 
         ax = plot_pr_curve(
             precisions, recalls, label='{:.2f}'.format(iou_thr), color=COLORS[idx*2], ax=ax)
