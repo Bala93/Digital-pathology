@@ -54,8 +54,8 @@ if __name__ == "__main__":
 
     p = Augmentor.Pipeline(source_directory=path_to_img,output_directory=out_img_path,ground_truth_output_directory=out_mask_path)
     p.ground_truth(path_to_mask)
-    p.flip_left_right(probability=0.5)
-    p.flip_top_bottom(probability=0.5)
+    p.flip_left_right(probability=1)
+    p.flip_top_bottom(probability=1)
     
 
     

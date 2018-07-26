@@ -18,9 +18,7 @@ mask_whole_files_total = size(mask_whole_files,1);
 
 textprogressbar('Creating mask');
 for whole_mask_count = 1: mask_whole_files_total
-   textprogressbar(whole_mask_count);
-   pause(0.05);
-   % Whole mask
+   textprogressbar(whole_mask_count)   % Whole mask
    mask_whole_name_with_ext = mask_whole_files(whole_mask_count).name; 
    mask_whole_name     = mask_whole_name_with_ext(1:end-4);
    whole_mask_path     = fullfile(mask_whole_files(whole_mask_count).folder,mask_whole_name_with_ext);
@@ -32,7 +30,6 @@ for whole_mask_count = 1: mask_whole_files_total
 
    for each_sample_mask = 1:no_mask_sample_files
        textprogressbar(whole_mask_count);
-       pause(0.05);
        mask_folder = mask_sample_files(each_sample_mask).folder; 
        mask_name =  mask_sample_files(each_sample_mask).name;
        mask_path        = fullfile(mask_folder,mask_name); 

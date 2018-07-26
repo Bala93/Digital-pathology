@@ -310,7 +310,7 @@ if __name__ == "__main__":
     pred_box = os.path.join(opt.json_path,'predicted_out.json')
 
     gt_box = '/media/htic/NewVolume1/murali/mitosis/mitotic_count/ground_truth_boxes.json'
-  
+    # gt_box = '/media/htic/NewVolume1/murali/mitosis/mitotic_count/whole.json'
     with open(gt_box) as infile:
         gt_boxes = json.load(infile)
 
@@ -336,15 +336,17 @@ if __name__ == "__main__":
 
         precisions = data['precisions']
         recalls = data['recalls']
-        print("iteration (%d)",idx)
+        print("iteration:",idx,"iou:",iou_thr)
         idx_max = np.argmax([(2*p*r)/(p+r) for p,r in zip(precisions,recalls)])
         print("precision:",precisions[idx_max],"recall:",recalls[idx_max],"F1 Score:",2*precisions[idx_max]*recalls[idx_max]/(precisions[idx_max]+recalls[idx_max]))
+        
+        print(len(precisions.shape))
         idx_max_recall = np.argmax(r for r in recalls)
         print("precision:",precisions[idx_max_recall],"recall:",recalls[idx_max_recall])
-        idxs = [i for i in range(len(precisions)) if recalls[i]>=0.8]
+        #idxs = [i for i in range(len(precisions)) if recalls[i]>=0.8]
         #print (idxs)
-        for idx_ in idxs:
-            print("precision:",precisions[idx_],"recall:",recalls[idx_])
+        # for idx_ in idxs:
+        #     print("precision:",precisions[idx_],"recall:",recalls[idx_])
 
         ax = plot_pr_curve(
             precisions, recalls, label='{:.2f}'.format(iou_thr), color=COLORS[idx*2], ax=ax)

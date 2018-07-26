@@ -16,10 +16,8 @@ if __name__ == "__main__":
     # This has to received from the user. 
     img_ext     = 'jpg'
     mask_ext    = 'jpg'
-    #img_path    = '/media/htic/NewVolume1/murali/mitosis/mitotic_count/image_size_256_stride_32_updated'
-    img_path	= '/media/htic/NewVolume1/murali/mitosis/mitotic_count/test_images_sample/image_size_256_stride_183'
-    #mask_path   = '/media/htic/NewVolume1/murali/mitosis/mitotic_count/mask_size_256_stride_32_updated'
-    mask_path   = '/media/htic/NewVolume1/murali/mitosis/mitotic_count/test_images_sample/mask_size_256_stride_183'
+    img_path    = '/media/htic/NewVolume1/murali/mitosis/mitotic_count/image_size_256_stride_128_updated'
+    mask_path   = '/media/htic/NewVolume1/murali/mitosis/mitotic_count/mask_size_256_stride_128_updated'
     out_path    = '/media/htic/NewVolume1/murali/mitosis/mitotic_segment/test'
     split_ratio =  0# Train and test split
     #######################

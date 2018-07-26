@@ -3,8 +3,8 @@ import glob
 import os
 from tqdm import tqdm
 
-xml_path = glob.glob('/media/htic/NewVolume1/murali/mitosis/mitotic_count/xml_size_512_stride_32/*.xml')
-txt_save_path = '/media/htic/NewVolume2/yolo/darknet/sakthi_nuclei/nuclei/train_data_yolo/train_labels/'
+xml_path = glob.glob('/media/htic/NewVolume1/murali/mitosis/mitotic_count/xml_size_512_stride_128_updated/*.xml')
+txt_save_path = '/media/htic/NewVolume2/yolo/darknet_multiple/darknet/mitosis_settings/train_512_128'
 
 for each_xml_path in tqdm(xml_path):
     

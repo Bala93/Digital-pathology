@@ -19,8 +19,8 @@ sample_save_path='/media/htic/NewVolume1/murali/mitosis/mitotic_count'
 
 # Remove unnecessary files including masks and images
 
-sample_img_path=${sample_save_path}/image_size_${size}_stride_${stride}
-sample_mask_path=${sample_save_path}/mask_size_${size}_stride_${stride}
+#sample_img_path=${sample_save_path}/image_size_${size}_stride_${stride}
+#sample_mask_path=${sample_save_path}/mask_size_${size}_stride_${stride}
 #matlab -nodisplay -nodesktop -r "mask_generate1('${whole_mask_path}','${sample_mask_path}','${sample_img_path}');quit"
 # Do augmentation
 #no_samples=17500
@@ -28,7 +28,7 @@ sample_mask_path=${sample_save_path}/mask_size_${size}_stride_${stride}
 #find . -type f -print | awk -F/ 'length($NF) > 25' | xargs rm
 
 # Create xml using created mask
-#python bounding_box_create.py --mask_path=${sample_save_path}/mask_size_${size}_stride_${stride}_updated --mask_ext=${sample_mask_ext} --xml_path=${sample_save_path}/xml_size_${size}_stride_${stride}
+#python bounding_box_create.py --mask_path=${sample_save_path}/mask_size_${size}_stride_${stride}_updated --mask_ext=${sample_mask_ext} --xml_path=${sample_save_path}/xml_size_${size}_stride_${stride}_updated
 
 # Move the created images and xmls to object detection folder
 #cd /media/htic/NewVolume1/murali/Object_detection/models/research/images/
@@ -47,20 +47,20 @@ sample_mask_path=${sample_save_path}/mask_size_${size}_stride_${stride}
 #echo "Creating TFRecord..."
 ########################## Create record files using image and mask files
 #cd /media/htic/NewVolume1/murali/Object_detection/models/research
-#python object_detection/dataset_tools/create_mitosis_tf_record.py --label_map_path=/media/htic/NewVolume1/murali/Object_detection/models/research/data/mitosis_label_map.pbtxt --data_dir=/media/htic/NewVolume1/murali/Object_detection/models/research --output_dir=/media/htic/NewVolume1/murali/Object_detection/models/research/data/mitosis/${size}_${stride}_normalized
+#python object_detection/dataset_tools/create_mitosis_tf_record.py --label_map_path=/media/htic/NewVolume1/murali/Object_detection/models/research/data/mitosis_label_map.pbtxt --data_dir=/media/htic/NewVolume1/murali/Object_detection/models/research --output_dir=/media/htic/NewVolume1/murali/Object_detection/models/research/data/mitosis/${size}_${stride}_corrected
 
 #echo "Start Training..."
 # Perform training
 #cd /media/htic/NewVolume1/murali/Object_detection/models/research
 #export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
-#python object_detection/train.py --logtostderr --pipeline_config_path=/media/htic/NewVolume1/murali/Object_detection/models/research/models/model_mitosis/faster_rcnn_resnet101_mitosis.config --train_dir=/media/htic/NewVolume1/murali/Object_detection/models/research/models/model_mitosis/train/${size}_${stride}_normalized
+#python object_detection/train.py --logtostderr --pipeline_config_path=/media/htic/NewVolume1/murali/Object_detection/models/research/models/model_mitosis/faster_rcnn_resnet101_1024.config --train_dir=/media/htic/NewVolume1/murali/Object_detection/models/research/models/model_mitosis/train/${size}_${stride}_corrected
 
 # Create graph
 #NOTE: Remove respective Graph Directory before execution.
-#d /media/htic/NewVolume1/murali/Object_detection/models/research
+#cd /media/htic/NewVolume1/murali/Object_detection/models/research
 #export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
-#ckpt_no=36760  #76570 67453 66359 65260 68534 9677  64162 
-#python object_detection/export_inference_graph.py --input_type image_tensor --pipeline_config_path=models/model_mitosis/faster_rcnn_resnet101_mitosis.config --trained_checkpoint_prefix=models/model_mitosis/train/${size}_${stride}_normalized/model.ckpt-${ckpt_no} --output_directory=models/model_mitosis/graph/${size}_${stride}_normalized
+#ckpt_no=202567 #197041  #76570 67453 66359 65260 68534 9677  64162 
+#python object_detection/export_inference_graph.py --input_type image_tensor --pipeline_config_path=models/model_mitosis/faster_rcnn_resnet101_1024.config --trained_checkpoint_prefix=models/model_mitosis/train/${size}_${stride}_corrected/model.ckpt-${ckpt_no} --output_directory=models/model_mitosis/graph/${size}_${stride}_corrected
 
 #Stain Normalize Test Image
 
@@ -68,7 +68,7 @@ sample_mask_path=${sample_save_path}/mask_size_${size}_stride_${stride}
 cd /media/htic/NewVolume1/murali/Object_detection/models/research
 export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
 min_score_thresh=0.50
-python infer_patch_wise_eval.py --model_file=models/model_mitosis/graph/${size}_${stride}_normalized/frozen_inference_graph.pb --result_path=${sample_save_path}/results/${size}_${stride}_normalized  --thresh=${min_score_thresh}
+python infer_patch_wise_eval.py --model_file=models/model_mitosis/graph/${size}_${stride}_corrected/frozen_inference_graph.pb --result_path=${sample_save_path}/results/${size}_${stride}_updated  --thresh=${min_score_thresh}
 
 #Evaluation 
 #cd /media/htic/NewVolume1/murali/mitosis/codes/Digital-pathology/codes

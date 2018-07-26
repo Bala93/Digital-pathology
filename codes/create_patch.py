@@ -108,7 +108,7 @@ if __name__ == "__main__":
         for stride in tqdm(stride_list):
             print ("Stride size : {}\n".format(stride))
                 
-            out_folder_temp = os.path.join(out_folder,input_type + '_size_' + str(window_shape[0]) + '_' + 'stride_' +str(stride))    
+            out_folder_temp = os.path.join(out_folder,input_type + '_size_' + str(window_shape[0]) + '_' + 'stride_' +str(stride)+'_classes')    
         
             if not os.path.exists(out_folder_temp):
                 print ("Directory {} not found,creating one".format(out_folder_temp))

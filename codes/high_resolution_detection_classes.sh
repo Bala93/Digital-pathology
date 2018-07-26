@@ -3,26 +3,26 @@ stride=32
 whole_img_ext='bmp'
 whole_mask_ext='bmp'
 sample_mask_ext='jpg'
-whole_mask_path='/media/htic/NewVolume1/murali/mitosis/mitotic_count/whole_mask'
+whole_mask_path='/media/htic/NewVolume1/murali/mitosis/mitotic_count/mitotic_non_mitotic/'
 whole_img_path='/media/htic/NewVolume1/murali/mitosis/mitotic_count/whole_images'
 sample_save_path='/media/htic/NewVolume1/murali/mitosis/mitotic_count'
-image_aug_path='/media/htic/NewVolume1/murali/mitosis/mitotic_count/image_size_512_stride_128_updated'
-mask_aug_path='/media/htic/NewVolume1/murali/mitosis/mitotic_count/mask_size_512_stride_128_updated'
+image_aug_path='/media/htic/NewVolume1/murali/mitosis/mitotic_count/image_size_512_stride_32_updated'
+mask_aug_path='/media/htic/NewVolume1/murali/mitosis/mitotic_count/mask_size_512_stride_32_classes_updated'
 #Stain Normalize Whole Image
 #matlab -nodisplay -nodesktop -r "stain_normalization('${whole_img_path}','${whole_img_path}/1.bmp');quit"
 
 # Whole image
-#python create_patch.py --input_path=${whole_img_path} --output_path=${sample_save_path} --img_ext=${whole_img_ext} --stride=${stride} --img_size=${size} --input_type='image'
+# python create_patch.py --input_path=${whole_img_path} --output_path=${sample_save_path} --img_ext=${whole_img_ext} --stride=${stride} --img_size=${size} --input_type='image'
 
 # Whole mask
-#python create_patch.py --input_path=${whole_mask_path} --output_path=${sample_save_path}  --img_ext=${whole_mask_ext} --stride=${stride} --img_size=${size} --input_type='mask'
+# python create_patch.py --input_path=${whole_mask_path} --output_path=${sample_save_path}  --img_ext=${whole_mask_ext} --stride=${stride} --img_size=${size} --input_type='mask'
 
 # Remove unnecessary files including masks and images
 
-sample_img_path=${sample_save_path}/image_size_${size}_stride_${stride}
-sample_mask_path=${sample_save_path}/mask_size_${size}_stride_${stride}
+sample_img_path=${sample_save_path}/image_size_${size}_stride_${stride}_classes
+sample_mask_path=${sample_save_path}/mask_size_${size}_stride_${stride}_classes
 # mask_generate:Remove masks which are cut mask_generate1:Remove the patch itself if a mask is cut in that patch.
-#matlab -nodisplay -nodesktop -r "mask_generate('${whole_mask_path}','${sample_mask_path}','${sample_img_path}');quit"
+# matlab -nodisplay -nodesktop -r "mask_generate('${whole_mask_path}','${sample_mask_path}','${sample_img_path}');quit"
 
 # Do augmentation
 #no_samples=1000
@@ -32,7 +32,7 @@ sample_mask_path=${sample_save_path}/mask_size_${size}_stride_${stride}
 
 # Create xml using created mask
 #NOTE:Change width,height in mask.xml before running the below code.
-python bounding_box_create.py --mask_path=${sample_save_path}/mask_size_${size}_stride_${stride}_updated --mask_ext=${sample_mask_ext} --xml_path=${sample_save_path}/xml_size_${size}_stride_${stride}_updated 
+python bounding_box_create_classes.py --mask_path='/media/htic/NewVolume1/murali/mitosis/mitotic_count/mask_size_512_stride_32_classes_updated' --mask_ext='jpg' --xml_path='/media/htic/NewVolume1/murali/mitosis/512_32_xml_classes'
 
 # Move the created images and xmls to object detection folder
 # cd /media/htic/NewVolume1/murali/Object_detection/models/research/images/

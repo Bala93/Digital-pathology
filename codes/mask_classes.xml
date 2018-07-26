@@ -1,19 +1,26 @@
 <annotation>
-    <folder>HTIC-Polyp</folder>
+    <folder>HTIC-Mitosis</folder>
     <filename>{}</filename>
     <source>
-        <database>Polyp</database>
+        <database>Mitosis</database>
         <annotation>HTIC-Annotated</annotation>
         <image>HTIC-Images</image>
     </source>
     <size>
-        <width>288</width>
-        <height>288</height>
+        <width>512</width>
+        <height>512</height>
         <depth>3</depth>
     </size>
     <segmented>0</segmented>
     <object>
-        <name>Polyp</name>
+        <name>Mitotic</name>
+        <pose>Frontal</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+    </object>
+    <object>
+        <name>NonMitotic</name>
         <pose>Frontal</pose>
         <truncated>0</truncated>
         <occluded>0</occluded>

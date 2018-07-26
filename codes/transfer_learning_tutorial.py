@@ -195,8 +195,6 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=2):
                 outputs = model(inputs)
                 _, preds = torch.max(outputs.data, 1)
 
-
-
                 loss = criterion(outputs, labels)
 
                 # backward + optimize only if in training phase

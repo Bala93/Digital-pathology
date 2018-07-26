@@ -21,6 +21,9 @@ for whole_mask_count = 1: mask_whole_files_total
    mask_whole_name_with_ext = mask_whole_files(whole_mask_count).name; 
    mask_whole_name     = mask_whole_name_with_ext(1:end-4);
    whole_mask_path     = fullfile(mask_whole_files(whole_mask_count).folder,mask_whole_name_with_ext);
+   image=imread(whole_mask_path);
+   sum_whole_mask_path=sum(image(:));
+   if sum_whole_mask_path>0
    [whole_mask_area,whole_mask_bw,~]= getArea1(whole_mask_path);
    
    % Sample mask
@@ -56,5 +59,6 @@ for whole_mask_count = 1: mask_whole_files_total
 %        end
        end
      end
+   end
 end
 end
